@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 import base64
 
+
 class Gender(models.Model):
     name = models.CharField(max_length=20)
     
@@ -16,7 +17,7 @@ class Interest(models.Model):
 class User(models.Model):
     name = models.CharField(max_length=20)
     birth_date = models.DateField()
-    gender = models.ForeignKey('Gender', on_delete=models.CASCADE)
+    gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender')
     description = models.TextField()
     
     def __str__(self):
@@ -28,7 +29,7 @@ class User(models.Model):
 
 
 class Picture(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='picture_user')
 
     _file = models.TextField(db_column="file", blank=True)
     
@@ -58,8 +59,8 @@ class Event(models.Model):
     
     
 class Match(models.Model):
-    user_1 = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_2 = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_user_1')
+    user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_user_2')
     date = models.DateField()
     last_message_date = models.DateField()
     
@@ -68,8 +69,8 @@ class Match(models.Model):
         
         
 class Chat(models.Model):
-    user_sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_receiver = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_user_sender')
+    user_receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_user_receiver')
     message = models.TextField()
     date = models.DateField()
     
@@ -78,16 +79,16 @@ class Chat(models.Model):
       
 
 class User_interest(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    interest_id = models.ForeignKey(Interest, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_interest_user_id')
+    interest_id = models.ForeignKey(Interest, on_delete=models.CASCADE, related_name='user_interest_interest_id')
     
     class Meta:
         verbose_name_plural="User_interests"
         
 
 class User_gender_interest(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    gender_id = models.ForeignKey(Gender, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_gender_interest_user_id')
+    gender_id = models.ForeignKey(Gender, on_delete=models.CASCADE, related_name='user_gender_interest_gender_id')
     
     class Meta:
         verbose_name_plural="User_interests"
