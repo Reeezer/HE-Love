@@ -55,4 +55,4 @@ py manage.py migrate
 py manage.py loaddata users genders
 ```
 
-This command might be outdated. You need to add all models in the fixtures folder if that is the case
+The loaddata command might be outdated. You need to add all models in the fixtures folder if that is the case
