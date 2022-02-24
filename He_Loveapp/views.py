@@ -9,7 +9,8 @@ from django.contrib.auth import get_user_model
 # Create your wiews here
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    context = {}
+    return render(request, 'He_Loveapp/index.html', context)
 
 class UserListView(generic.ListView):
     model = User
@@ -19,3 +20,5 @@ class UserListView(generic.ListView):
     
 class UserDetailView(generic.DetailView):
     model = User
+    
+    
