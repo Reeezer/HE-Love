@@ -1,0 +1,22 @@
+[
+	{
+		"model": "He_Loveapp.user",
+		"pk": 1,
+		"fields": {
+			"name": "Leon",
+			"birth_date": "2001-03-27",
+			"gender": "1",
+			"description": "Je suis un beau-gosse"
+		}
+	},
+	{
+		"model": "He_Loveapp.user",
+		"pk": 2,
+		"fields": {
+			"name": "Luca",
+			"birth_date": "1998-05-14",
+			"gender": "1",
+			"description": "Je suis competent"
+		}
+	}
+]

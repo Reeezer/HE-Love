@@ -1,0 +1,44 @@
+[
+	{
+		"model": "He_Loveapp.gender",
+		"pk": 1,
+		"fields": {
+			"name": "Homme"
+		}
+	},
+	{
+		"model": "He_Loveapp.gender",
+		"pk": 2,
+		"fields": {
+			"name": "Femme"
+		}
+	},
+	{
+		"model": "He_Loveapp.gender",
+		"pk": 3,
+		"fields": {
+			"name": "Transexuel(le)"
+		}
+	},
+	{
+		"model": "He_Loveapp.gender",
+		"pk": 4,
+		"fields": {
+			"name": "Non binaire"
+		}
+	},
+	{
+		"model": "He_Loveapp.gender",
+		"pk": 5,
+		"fields": {
+			"name": "Bisexuel(le)"
+		}
+	},
+	{
+		"model": "He_Loveapp.gender",
+		"pk": 6,
+		"fields": {
+			"name": "Aucun"
+		}
+	}
+]

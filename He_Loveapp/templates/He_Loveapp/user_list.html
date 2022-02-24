@@ -1,0 +1,38 @@
+{% extends 'He_Loveapp/base.html' %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+
+<table class="table table-bordered mt-5">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+			<th>Age</th>
+			<th>Gender</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+
+	{% for user in object_list %}
+
+	<tr>
+		<td>
+			{{ user.id }}
+		</td>
+		<td>
+			{{ user.name }}
+		</td>
+		<td>
+			{{ user.get_age }}
+		</td>
+		<td>
+			{{ user.description }}
+		</td>
+	</tr>
+
+	{% endfor %}
+</table>
+
+{% endblock %}
