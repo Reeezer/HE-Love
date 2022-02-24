@@ -16,6 +16,7 @@ class UserListView(generic.ListView):
     model = User
 
     def get_queryset(self):
+        print(User.objects.all())
         return User.objects.all()
     
 class UserDetailView(generic.DetailView):
