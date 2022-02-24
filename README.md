@@ -45,3 +45,14 @@ py manage.py runserver
 ```
 
 The server will start on port 8000 by default
+
+## Migrations
+
+If it is the first install, you also need to run migrations and seeding
+
+```
+py manage.py migrate
+py manage.py loaddata users genders
+```
+
+The loaddata command might be outdated. You need to add all models in the fixtures folder if that is the case
