@@ -56,3 +56,17 @@ py manage.py loaddata users genders
 ```
 
 The loaddata command might be outdated. You need to add all models in the fixtures folder if that is the case
+
+## Installing vue CLI
+
+go to https://nodejs.org/en/ to download and install node.js current (17.6.0)
+After that open a cmd and install vue-cli
+```
+npm install -g @vue/cli
+```
+
+Then run this command to compile vue on the fly
+
+```
+npm run serve
+```
