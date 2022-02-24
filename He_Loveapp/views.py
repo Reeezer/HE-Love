@@ -16,10 +16,17 @@ class UserListView(generic.ListView):
     model = User
 
     def get_queryset(self):
-        print(User.objects.all())
         return User.objects.all()
     
 class UserDetailView(generic.DetailView):
     model = User
     
+class UserCreateView(generic.CreateView):
+    model = User
+    fields = ['name', 'birth_date', 'gender', 'description']
+    success_url = reverse_lazy('users-list')
     
+class UserUpdateView(generic.UpdateView):
+    model = User
+    fields = ['name', 'birth_date', 'gender', 'description']
+    success_url = reverse_lazy('users-list')
