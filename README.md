@@ -65,3 +65,8 @@ After that open a cmd and install vue-cli
 npm install -g @vue/cli
 ```
 
+Then run this command to compile vue on the fly
+
+```
+npm run serve
+```
