@@ -61,6 +61,8 @@ class Event(models.Model):
 class Match(models.Model):
     user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_user_1')
     user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_user_2')
+    vote_user_1 = models.BooleanField()
+    vote_user_2 = models.BooleanField()
     date = models.DateField()
     last_message_date = models.DateField()
     
