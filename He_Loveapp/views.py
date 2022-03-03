@@ -34,6 +34,12 @@ class UserUpdateView(generic.UpdateView):
 
 
 
+class PictureListView(generic.ListView):
+    model = Picture
+    
+    def get_queryset(self):
+        return Picture.objects.all()
+
 class PictureDetailView(generic.DetailView):
     model = Picture
     
@@ -54,6 +60,13 @@ class PictureDeleteView(generic.DeleteView):
 
 
 
+
+class EventListView(generic.ListView):
+    model = Event
+    
+    def get_queryset(self):
+        return Event.objects.all()
+
 class EventDetailView(generic.DetailView):
     model = Event
     
@@ -73,7 +86,12 @@ class EventDeleteView(generic.DeleteView):
     
     
     
+class MatchListView(generic.ListView):
+    model = Match
     
+    def get_queryset(self):
+        return Match.objects.all()
+        
 class MatchDetailView(generic.DetailView):
     model = Match
     
@@ -93,6 +111,12 @@ class MatchDeleteView(generic.DeleteView):
     
     
     
+class ChatListView(generic.ListView):
+    model = Chat
+    
+    def get_queryset(self):
+        return Chat.objects.all()
+        
 class ChatDetailView(generic.DetailView):
     model = Chat
     
