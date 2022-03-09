@@ -122,7 +122,7 @@ class User_gender_interest(models.Model):
     gender_id = models.ForeignKey(Gender, on_delete=models.CASCADE, related_name='user_gender_interest_gender_id')
     
     class Meta:
-        verbose_name_plural="User_interests"
+        verbose_name_plural="User_gender_interests"
 
 
 
