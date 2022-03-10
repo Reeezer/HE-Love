@@ -1,6 +1,6 @@
 [
 	{
-		"model": "He_Loveapp.user",
+		"model": "He_Loveapp.appuser",
 		"pk": 1,
 		"fields": {
 			"name": "Leon",
@@ -10,7 +10,7 @@
 		}
 	},
 	{
-		"model": "He_Loveapp.user",
+		"model": "He_Loveapp.appuser",
 		"pk": 2,
 		"fields": {
 			"name": "Luca",

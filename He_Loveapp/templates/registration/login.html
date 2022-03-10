@@ -1,0 +1,15 @@
+{% extends 'He_Loveapp/base.html' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block content %}
+
+<form method="post">
+	{% csrf_token %} 
+	{{form.as_p}} 
+	<input type="submit" value="Login" />
+</form>
+
+<div>Si vous n'avez pas encore de commpte, <a href="{% url 'sign-up' %}">créez-en un</a>.</div>
+
+{% endblock %}
