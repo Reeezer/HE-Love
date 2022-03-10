@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
@@ -6,8 +7,8 @@ import base64
 class Gender(models.Model):
     name = models.CharField(max_length=20)
     
-    def values():
-        return Gender.objects.all()
+    def __str__(self):
+        return self.name
     
     
 class Interest(models.Model):
@@ -59,15 +60,42 @@ class Event(models.Model):
     def __str__(self):
         return self.title
     
+    def get_description(self):
+        return self.description
+    
+    def get_date(self):
+        return self.date
+    
     
 class Match(models.Model):
     user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_user_1')
     user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_user_2')
+    vote_user_1 = models.BooleanField(null=True)
+    vote_user_2 = models.BooleanField(null=True)
     date = models.DateField()
     last_message_date = models.DateField()
     
     class Meta:
         verbose_name_plural="Matches"
+        
+    def check_match(self):
+        # Both matches
+        if self.vote_user_1 == True and self.vote_user_2 == True:
+            return True, "It's a match !"
+        
+        # No match :(
+        elif self.vote_user_1 == False or self.vote_user_2 == False:
+           return False, "Match refused :("
+       
+        else:
+            return False, "Waiting for match"
+        
+    def get_last_message_date(self):
+        return self.last_message_date
+    
+    def get_matched_users(self):
+        if self.check_match():
+            return self.user_1, self.user_2
         
         
 class Chat(models.Model):
@@ -93,7 +121,7 @@ class User_gender_interest(models.Model):
     gender_id = models.ForeignKey(Gender, on_delete=models.CASCADE, related_name='user_gender_interest_gender_id')
     
     class Meta:
-        verbose_name_plural="User_interests"
+        verbose_name_plural="User_gender_interests"
 
 
 

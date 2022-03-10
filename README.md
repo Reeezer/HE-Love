@@ -63,6 +63,7 @@ go to https://nodejs.org/en/ to download and install node.js current (17.6.0)
 After that open a cmd and install vue-cli
 ```
 npm install -g @vue/cli
+npm install vue
 ```
 
 Then run this command to compile vue on the fly
