@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django import forms
 import datetime
 
-from .models import Picture, AppUser, Gender, Event, Match, Chat
+from .models import Picture, AppUser, Gender, Event, Match, Chat, User_interest, User_gender_interest
 
 from django.contrib.auth import get_user_model
 

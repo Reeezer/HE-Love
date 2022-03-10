@@ -1,0 +1,26 @@
+[
+	{
+		"model": "He_Loveapp.user_gender_interest",
+		"pk": "1",
+		"fields": {
+			"user": "1",
+			"gender": "1"
+		}
+	},
+	{
+		"model": "He_Loveapp.user_gender_interest",
+		"pk": "2",
+		"fields": {
+			"user": "1",
+			"gender": "2"
+		}
+	},
+	{
+		"model": "He_Loveapp.user_gender_interest",
+		"pk": "3",
+		"fields": {
+			"user": "1",
+			"gender": "3"
+		}
+	}
+]
