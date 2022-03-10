@@ -33,7 +33,6 @@ class AppUser(User):
 
 class Picture(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='picture_user')
-
     _file = models.TextField(db_column="file", blank=True)
     
     class Meta:

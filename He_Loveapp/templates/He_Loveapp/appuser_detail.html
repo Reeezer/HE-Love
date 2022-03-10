@@ -1,14 +1,14 @@
 {% extends 'He_Loveapp/base.html' %}
 
-{% block title %}Users{% endblock %}
+{% block title %}Détail{% endblock %}
 
 {% block content %}
 
 <div>
-	<div>Prénom: {{ user.name }}</div>
-	<div>Age: {{ user.get_age }}</div>
-	<div>Genre: {{ user.gender.name }}</div>
-	<div>Description: {{ user.description }}</div>
+	<div>Prénom: {{ appuser.username }}</div>
+	<div>Age: {{ appuser.get_age }}</div>
+	<div>Genre: {{ appuser.gender.name }}</div>
+	<div>Description: {{ appuser.description }}</div>
 </div>
 
 {% endblock %}
