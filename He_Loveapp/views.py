@@ -33,15 +33,12 @@ def sign_up(request):
     return render(request, 'registration/sign_up.html', context)
 
 
-@login_required
 class UserListView(generic.ListView):
     model = AppUser
 
     def get_queryset(self):
         return AppUser.objects.all()
 
-
-@login_required
 class UserDetailView(generic.DetailView):
     model = AppUser
 
@@ -65,7 +62,6 @@ class RegisterForm(UserCreationForm):
         return user
 
 
-@login_required
 class UserUpdateView(generic.UpdateView):
     model = AppUser
     fields = ['name', 'birth_date', 'gender', 'description']
