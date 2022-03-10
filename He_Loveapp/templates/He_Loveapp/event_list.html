@@ -1,0 +1,37 @@
+{% extends 'He_Loveapp/base.html' %}
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th>Date</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+
+	{% for event in object_list %}
+
+	<tr>
+		<td>
+			{{ event.id }}
+		</td>
+		<td>
+			{{ event.title }}
+		</td>
+		<td>
+			{{ event.date }}
+		</td>
+		<td>
+			{{ event.description }}
+		</td>
+	</tr>
+
+	{% endfor %}
+</table>
+
+{% endblock %}
