@@ -1,10 +1,13 @@
 from django.db import models
 from datetime import date
+from django.contrib.auth.models import User
 import base64
-
 
 class Gender(models.Model):
     name = models.CharField(max_length=20)
+    
+    def values():
+        return Gender.objects.all()
     
     
 class Interest(models.Model):
@@ -14,14 +17,13 @@ class Interest(models.Model):
         return self.description
 
 
-class User(models.Model):
-    name = models.CharField(max_length=20)
+class AppUser(User):
     birth_date = models.DateField()
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender')
     description = models.TextField()
     
     def __str__(self):
-        return self.name
+        return self.username
     
     def get_age(self):
         today = date.today()
