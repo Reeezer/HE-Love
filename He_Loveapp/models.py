@@ -3,6 +3,7 @@ from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
 import base64
+import datetime
 
 class Gender(models.Model):
     name = models.CharField(max_length=20)
@@ -19,9 +20,9 @@ class Interest(models.Model):
 
 
 class AppUser(User):
-    birth_date = models.DateField()
-    gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender')
-    description = models.TextField()
+    birth_date = models.DateField(blank=False, default=datetime.datetime.now)
+    gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
+    description = models.TextField(blank=False, default="Hello !")
     
     def __str__(self):
         return self.username
@@ -29,10 +30,19 @@ class AppUser(User):
     def get_age(self):
         today = date.today()
         return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+    
+    def get_interests(self):
+        return User_interest.objects.filter(user=self.id)
+    
+    def get_gender_interests(self):
+        return User_gender_interest.objects.filter(user=self.id)
+    
+    def get_matches(self):
+        return Match.objects.filter(user_1=self.id).filter(user_2=self.id)
 
 
 class Picture(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='picture_user')
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='picture_user')
     _file = models.TextField(db_column="file", blank=True)
     
     class Meta:
@@ -67,8 +77,8 @@ class Event(models.Model):
     
     
 class Match(models.Model):
-    user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_user_1')
-    user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_user_2')
+    user_1 = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='match_user_1')
+    user_2 = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='match_user_2')
     vote_user_1 = models.BooleanField(null=True)
     vote_user_2 = models.BooleanField(null=True)
     date = models.DateField()
@@ -91,15 +101,18 @@ class Match(models.Model):
         
     def get_last_message_date(self):
         return self.last_message_date
-    
-    def get_matched_users(self):
-        if self.check_match():
-            return self.user_1, self.user_2
+        
+    @classmethod
+    def create(self, user_1, user_2, vote_user_1):
+        self.user_1 = user_1
+        self.user_2 = user_2
+        self.vote_user_1 = vote_user_1
+        self.date = datetime.datetime.now
         
         
 class Chat(models.Model):
-    user_sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_user_sender')
-    user_receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_user_receiver')
+    user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
+    user_receiver = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_receiver')
     message = models.TextField()
     date = models.DateField()
     
@@ -108,16 +121,16 @@ class Chat(models.Model):
       
 
 class User_interest(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_interest_user_id')
-    interest_id = models.ForeignKey(Interest, on_delete=models.CASCADE, related_name='user_interest_interest_id')
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='user_interest_user', default=1)
+    interest = models.ForeignKey(Interest, on_delete=models.CASCADE, related_name='user_interest_interest', default=1)
     
     class Meta:
         verbose_name_plural="User_interests"
         
 
 class User_gender_interest(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_gender_interest_user_id')
-    gender_id = models.ForeignKey(Gender, on_delete=models.CASCADE, related_name='user_gender_interest_gender_id')
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='user_gender_interest_user', default=1)
+    gender = models.ForeignKey(Gender, on_delete=models.CASCADE, related_name='user_gender_interest_gender', default=1)
     
     class Meta:
         verbose_name_plural="User_gender_interests"
