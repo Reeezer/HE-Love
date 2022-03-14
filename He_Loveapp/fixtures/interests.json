@@ -1,0 +1,9 @@
+[
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 1,
+		"fields": {
+			"name": "Homme"
+		}
+	}
+]

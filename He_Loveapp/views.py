@@ -12,7 +12,7 @@ import datetime
 
 from .models import Picture, AppUser, Gender, Event, Match, Chat, User_interest, User_gender_interest
 
-from django.contrib.auth import get_user_model
+
 
 # Create your wiews here
 
@@ -38,7 +38,11 @@ class UserListView(generic.ListView):
     model = AppUser
 
     def get_queryset(self):
-        return AppUser.objects.all()
+        current_user = AppUser.objects.get(id=self.request.user.id)
+        gender_interests = User_gender_interest.objects.filter(user=current_user.id).values('gender')        
+        genders = Gender.objects.filter(id__in=gender_interests)
+        
+        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id)
 
 
 class UserDetailView(generic.DetailView):

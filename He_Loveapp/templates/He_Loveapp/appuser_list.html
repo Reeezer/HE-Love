@@ -1,6 +1,6 @@
 {% extends 'He_Loveapp/base.html' %}
 
-{% block title %}Users{% endblock %}
+{% block title %}Utilisateurs{% endblock %}
 
 {% block content %}
 
@@ -8,11 +8,12 @@
 	<thead>
 		<tr>
 			<th>#</th>
-			<th>Name</th>
+			<th>Nom</th>
 			<th>Age</th>
-			<th>Gender</th>
+			<th>Genre</th>
 			<th>Recherche</th>
 			<th>Description</th>
+			<th>Intérêts</th>
 		</tr>
 	</thead>
 
@@ -32,11 +33,40 @@
 			{{ user.gender.name }}
 		</td>
 		<td>
+			{% if user.get_gender_interests.count > 0 %}
+				{% for gender_interest in user.get_gender_interests %}
+					{{ gender_interest.gender.name }}
+				{% endfor %}
+			{% else %}
+				Nothing
+			{% endif %}
+		</td>
+		<td>
 			{{ user.description }}
+		</td>
+		<td>
+			{% if user.get_interests.count > 0 %}
+				{% for interest in user.get_interests %}
+					<div> {{ interest.interest.desciption }} </div>
+				{% endfor %}
+			{% else %}
+				Nothing
+			{% endif %}
 		</td>
 	</tr>
 
 	{% endfor %}
 </table>
 
+<style>
+	table, th, td {
+		border: 1px solid;
+	}
+
+	table {
+		text-align:center;
+	}
+</style>
+
 {% endblock %}
+
