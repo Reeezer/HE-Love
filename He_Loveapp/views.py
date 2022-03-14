@@ -9,6 +9,8 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django import forms
 import datetime
+from django.db.models import Q
+from django.shortcuts import redirect
 
 from .models import Picture, AppUser, Gender, Event, Match, Chat, User_interest, User_gender_interest
 
@@ -29,20 +31,51 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return render(request, 'He_Loveapp/index.html')
+            return redirect('home')
     context['form'] = form
     return render(request, 'registration/sign_up.html', context)
 
+
+def swipe(request, pk, is_like):
+    user_2 = AppUser.objects.get(id=pk)
+    user_1 = AppUser.objects.get(id=request.user.id)
+    
+    # if the match already exists (the other user has already liked or disliked you), only modify it
+    if Match.objects.filter((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2))).exists():
+        match = Match.objects.get((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2)))
+        match.swipe(user_1, is_like)
+        match.save()
+        # TODO maybe set the pair user_1, user_2 as unique in this table
+    # if the match doesn't exists, let's create it
+    else:
+        Match.objects.create(user_1=user_1, user_2=user_2, vote_user_1=is_like)
+
+def like(request, pk):
+    swipe(request, pk, True)
+    return redirect('users-list')
+    
+def dislike(request, pk):
+    swipe(request, pk, False)
+    return redirect('users-list')
 
 class UserListView(generic.ListView):
     model = AppUser
 
     def get_queryset(self):
         current_user = AppUser.objects.get(id=self.request.user.id)
+        
         gender_interests = User_gender_interest.objects.filter(user=current_user.id).values('gender')        
         genders = Gender.objects.filter(id__in=gender_interests)
         
-        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id)
+        # We don't want to see again:
+        # People that we already liked
+        matches_1 = Match.objects.filter((Q(user_1=current_user) & Q(vote_user_1=True)) | (Q(user_2=current_user) & Q(vote_user_2=True))).values('user_1')
+        matches_2 = Match.objects.filter((Q(user_1=current_user) & Q(vote_user_1=True)) | (Q(user_2=current_user) & Q(vote_user_2=True))).values('user_2')
+        # People who we already have a match with
+        matches_3 = Match.objects.filter((Q(user_2=current_user) | Q(user_1=current_user)) & ~Q(vote_user_1=None) & ~Q(vote_user_2=None)).values('user_1')
+        matches_4 = Match.objects.filter((Q(user_2=current_user) | Q(user_1=current_user)) & ~Q(vote_user_1=None) & ~Q(vote_user_2=None)).values('user_2')
+        
+        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4))
 
 
 class UserDetailView(generic.DetailView):

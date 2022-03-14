@@ -82,8 +82,8 @@ class Match(models.Model):
     user_2 = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='match_user_2')
     vote_user_1 = models.BooleanField(null=True)
     vote_user_2 = models.BooleanField(null=True)
-    date = models.DateField()
-    last_message_date = models.DateField()
+    date = models.DateField(default=datetime.datetime.now)
+    last_message_date = models.DateField(default=datetime.datetime.now)
     
     class Meta:
         verbose_name_plural="Matches"
@@ -102,6 +102,25 @@ class Match(models.Model):
         
     def get_last_message_date(self):
         return self.last_message_date
+    
+    def get_opposite_user(self, user):
+        if user == self.user_1:
+            return self.user_2
+        else:
+            return self.user_1
+        
+    def contains_user(self, user_id):
+        return user_id == self.user_1 or user_id == self.user_2
+    
+    def swipe(self, user_id, is_like):
+        if user_id == self.user_1:
+            self.vote_user_1 = is_like
+        elif user_id == self.user_2:
+            self.vote_user_2 = is_like
+            
+        if self.vote_user_1 == True and self.vote_user_2 == True:
+            Chat.objects.create(user_sender=user_id, user_receiver=self.get_opposite_user(user_id), message="Entered in a new chat")
+        # TODO check and do something if it's a match
         
     @classmethod
     def create(self, user_1, user_2, vote_user_1):
@@ -115,7 +134,7 @@ class Chat(models.Model):
     user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
     user_receiver = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_receiver')
     message = models.TextField()
-    date = models.DateField()
+    date = models.DateField(default=datetime.datetime.now)
     
     class Meta:
         verbose_name_plural="Chats"

@@ -4,6 +4,8 @@
 
 {% block content %}
 
+<p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
+
 <table>
 	<thead>
 		<tr>
@@ -14,44 +16,46 @@
 			<th>Recherche</th>
 			<th>Description</th>
 			<th>Intérêts</th>
+			<th></th>
 		</tr>
 	</thead>
 
-	{% for user in object_list %}
+	{% for appuser in object_list %}
 
 	<tr>
 		<td>
-			{{ user.id }}
+			{{ appuser.id }}
 		</td>
 		<td>
-			{{ user.username }}
+			{{ appuser.username }}
 		</td>
 		<td>
-			{{ user.get_age }}
+			{{ appuser.get_age }}
 		</td>
 		<td>
-			{{ user.gender.name }}
+			{{ appuser.gender.name }}
 		</td>
 		<td>
-			{% if user.get_gender_interests.count > 0 %}
-				{% for gender_interest in user.get_gender_interests %}
-					{{ gender_interest.gender.name }}
-				{% endfor %}
-			{% else %}
-				Nothing
-			{% endif %}
+			{% for appuser_gender_interest in appuser.get_gender_interests %}
+				{{ appuser_gender_interest.gender.name }}
+			{% empty %}
+				---
+			{% endfor %}
 		</td>
 		<td>
-			{{ user.description }}
+			{{ appuser.description }}
 		</td>
 		<td>
-			{% if user.get_interests.count > 0 %}
-				{% for interest in user.get_interests %}
-					<div> {{ interest.interest.desciption }} </div>
-				{% endfor %}
-			{% else %}
-				Nothing
-			{% endif %}
+			{% for appuser_interest in appuser.get_interests %}
+				{{ appuser_interest.interest.description }}
+			{% empty %}
+				---
+			{% endfor %}
+		</td>
+		<td>
+			<a href="{% url 'users-detail' appuser.id %}">Détails</a>
+            <a href="{% url 'users-like' appuser.id %}">Like</a>
+            <a href="{% url 'users-dislike' appuser.id %}">Dislike</a>
 		</td>
 	</tr>
 
