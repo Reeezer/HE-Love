@@ -101,10 +101,13 @@ class Match(models.Model):
         
     def get_last_message_date(self):
         return self.last_message_date
-    
-    def get_matched_users(self):
-        if self.check_match():
-            return self.user_1, self.user_2
+        
+    @classmethod
+    def create(self, user_1, user_2, vote_user_1):
+        self.user_1 = user_1
+        self.user_2 = user_2
+        self.vote_user_1 = vote_user_1
+        self.date = datetime.datetime.now
         
         
 class Chat(models.Model):
