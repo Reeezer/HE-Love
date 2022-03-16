@@ -36,9 +36,9 @@ def sign_up(request):
     return render(request, 'registration/sign_up.html', context)
 
 
-def swipe(request, pk, is_like):
+def swipe(request_id, pk, is_like):
     user_2 = AppUser.objects.get(id=pk)
-    user_1 = AppUser.objects.get(id=request.user.id)
+    user_1 = AppUser.objects.get(id=request_id)
     
     # if the match already exists (the other user has already liked or disliked you), only modify it
     if Match.objects.filter((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2))).exists():
@@ -51,11 +51,17 @@ def swipe(request, pk, is_like):
         Match.objects.create(user_1=user_1, user_2=user_2, vote_user_1=is_like)
 
 def like(request, pk):
-    swipe(request, pk, True)
+    swipe(request.user.id, pk, True)
     return redirect('users-list')
     
 def dislike(request, pk):
-    swipe(request, pk, False)
+    swipe(request.user.id, pk, False)
+    return redirect('users-list')
+
+def superlike(request, pk):
+    # Superlike directly create a positive match between two people
+    swipe(request.user.id, pk, True)
+    swipe(pk, request.user.id, True)
     return redirect('users-list')
 
 class UserListView(generic.ListView):
