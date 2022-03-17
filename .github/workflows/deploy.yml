@@ -18,7 +18,7 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOY }}
       - name: Add known host
         run: |
-          ssh-keyscan -p ${{ secrets.DEPLOY_HOST_SSH_PORT }} ${{ secrets.DEPLOY_HOST }} bash deploy
+          ssh-keyscan -p ${{ secrets.DEPLOY_HOST_SSH_PORT }} ${{ secrets.DEPLOY_HOST }}
       - name: Deploy
         run: |
-          deploy
+          ssh -p ${{ secrets.DEPLOY_HOST_SSH_PORT }} ${{ secrets.DEPLOY_HOST }} 'deploy'
