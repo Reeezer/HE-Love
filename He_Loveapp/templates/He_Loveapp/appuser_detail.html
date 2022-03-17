@@ -10,13 +10,17 @@
 	<div>Genre: {{ appuser.gender.name }}</div>
 	<div>Description: {{ appuser.description }}</div>
 	<div>Intérêts: 
-		{% for interest in appuser.get_interests %}
-			<div> {{ interest.interest.desciption }} </div>
+		{% for appuser_interest in appuser.get_interests %}
+			{{ appuser_interest.interest.description }}
+		{% empty %}
+			---
 		{% endfor %}
 	<div>
 	<div>Genres recherchés: 
-		{% for gender_interest in appuser.get_gender_interests %}
-			<div> {{ gender_interest.gender.name }} </div>
+		{% for appuser_gender_interest in appuser.get_gender_interests %}
+			{{ appuser_gender_interest.gender.name }}
+		{% empty %}
+			---
 		{% endfor %}
 	<div>
 </div>
