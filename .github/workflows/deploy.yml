@@ -19,3 +19,6 @@ jobs:
       - name: Add known host
         run: |
           ssh-keyscan -p ${{ secrets.DEPLOY_HOST_SSH_PORT }} ${{ secrets.DEPLOY_HOST }} bash deploy
+      - name: Deploy
+        run: |
+          deploy
