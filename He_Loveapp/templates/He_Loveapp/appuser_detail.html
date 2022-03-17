@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div>
+<div class="profile">
 	<div>Prénom: {{ appuser.username }}</div>
 	<div>Age: {{ appuser.get_age }}</div>
 	<div>Genre: {{ appuser.gender.name }}</div>
@@ -15,14 +15,14 @@
 		{% empty %}
 			---
 		{% endfor %}
-	<div>
+	</div>
 	<div>Genres recherchés: 
 		{% for appuser_gender_interest in appuser.get_gender_interests %}
 			{{ appuser_gender_interest.gender.name }}
 		{% empty %}
 			---
 		{% endfor %}
-	<div>
+	</div>
 </div>
 
 {% endblock %}
