@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
@@ -24,6 +23,7 @@ class AppUser(User):
     birth_date = models.DateField(blank=False, default=datetime.datetime.now)
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
     description = models.TextField(blank=False, default="Hello !")
+    rank = models.IntegerField(default=0)
     
     def __str__(self):
         return self.username
@@ -39,7 +39,11 @@ class AppUser(User):
         return User_gender_interest.objects.filter(user=self.id)
     
     def get_matches(self):
-        return Match.objects.filter(user_1=self.id).filter(user_2=self.id)
+        return Match.objects.filter((Q(user_1=self.id) | Q(user_2=self.id)) & Q(vote_user_1=True) & Q(vote_user_2=True))
+    
+    def rank_up(self, amount):
+        self.rank += amount
+        self.save()
 
 
 class Picture(models.Model):
@@ -56,7 +60,6 @@ class Picture(models.Model):
         return base64.decodestring(self._file)
 
     data = property(get_file, set_file)
-
 
 
 class Event(models.Model):
@@ -82,8 +85,8 @@ class Match(models.Model):
     user_2 = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='match_user_2')
     vote_user_1 = models.BooleanField(null=True)
     vote_user_2 = models.BooleanField(null=True)
-    date = models.DateField(default=datetime.datetime.now)
-    last_message_date = models.DateField(default=datetime.datetime.now)
+    date = models.DateTimeField(default=datetime.datetime.now)
+    last_message_date = models.DateTimeField(default=datetime.datetime.now)
     
     class Meta:
         verbose_name_plural="Matches"
@@ -112,15 +115,19 @@ class Match(models.Model):
     def contains_user(self, user_id):
         return user_id == self.user_1 or user_id == self.user_2
     
-    def swipe(self, user_id, is_like):
-        if user_id == self.user_1:
+    def swipe(self, user, is_like):        
+        if user == self.user_1:
             self.vote_user_1 = is_like
-        elif user_id == self.user_2:
+        elif user == self.user_2:
             self.vote_user_2 = is_like
             
+        self.date = datetime.datetime.now()
+        self.last_message_date = datetime.datetime.now()
+        
         if self.vote_user_1 == True and self.vote_user_2 == True:
-            Chat.objects.create(user_sender=user_id, user_receiver=self.get_opposite_user(user_id), message="Entered in a new chat")
-        # TODO check and do something if it's a match
+            self.user_1.rank_up(10)
+            self.user_2.rank_up(10)
+            Chat.objects.create(user_sender=user, user_receiver=self.get_opposite_user(user), message="Entered in a new chat")
         
     @classmethod
     def create(self, user_1, user_2, vote_user_1):
@@ -128,6 +135,7 @@ class Match(models.Model):
         self.user_2 = user_2
         self.vote_user_1 = vote_user_1
         self.date = datetime.datetime.now
+        self.last_message_date = datetime.datetime.now
         
         
 class Chat(models.Model):

@@ -40,6 +40,9 @@ def swipe(request_id, pk, is_like):
     user_2 = AppUser.objects.get(id=pk)
     user_1 = AppUser.objects.get(id=request_id)
     
+    if is_like == True:
+        user_2.rank_up(1)
+    
     # if the match already exists (the other user has already liked or disliked you), only modify it
     if Match.objects.filter((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2))).exists():
         match = Match.objects.get((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2)))
@@ -81,7 +84,7 @@ class UserListView(generic.ListView):
         matches_3 = Match.objects.filter((Q(user_2=current_user) | Q(user_1=current_user)) & ~Q(vote_user_1=None) & ~Q(vote_user_2=None)).values('user_1')
         matches_4 = Match.objects.filter((Q(user_2=current_user) | Q(user_1=current_user)) & ~Q(vote_user_1=None) & ~Q(vote_user_2=None)).values('user_2')
         
-        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4))
+        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4)).order_by('-rank')
 
 
 class UserDetailView(generic.DetailView):

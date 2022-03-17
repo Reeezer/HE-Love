@@ -10,6 +10,7 @@
 	<thead>
 		<tr>
 			<th>#</th>
+			<th>Rang</th>
 			<th>Nom</th>
 			<th>Age</th>
 			<th>Genre</th>
@@ -25,6 +26,9 @@
 	<tr>
 		<td>
 			{{ appuser.id }}
+		</td>
+		<td>
+			{{ appuser.rank }}
 		</td>
 		<td>
 			{{ appuser.username }}
@@ -55,7 +59,7 @@
 		<td>
 			<a href="{% url 'users-detail' appuser.id %}">Détails</a>
             <a href="{% url 'users-like' appuser.id %}">Like</a>
-			<a href="{% url 'users-superlike' appuser.id %}">Super Like</a>
+			<a href="{% url 'users-superlike' appuser.id %}">Superlike</a>
             <a href="{% url 'users-dislike' appuser.id %}">Dislike</a>
 		</td>
 	</tr>
