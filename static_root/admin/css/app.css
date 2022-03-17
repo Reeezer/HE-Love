@@ -19,7 +19,7 @@
 
 	font-size: 16px;
 	font-family: "Sarala", sans-serif;
-	text-decoration: none;
+	text-decoration: none; 
 }
 
 /* ----- Body ----- */
@@ -81,6 +81,7 @@ header {
 
 header .title {
 	font-size: 20px;
+	color: var(--black-color);
 }
 
 header .icon {
