@@ -1,0 +1,28 @@
+[
+	{
+		"model": "He_Loveapp.match",
+		"pk": 1,
+		"fields": {
+            "user_1" : 1,
+            "user_2" : 2,
+            "vote_user_1" : "True",
+            "vote_user_2" : "True",
+            "date" : "2022-03-10 10:00:00",
+            "last_message_date" : "2022-03-10 12:00:00"
+		}
+	},
+
+    {
+		"model": "He_Loveapp.match",
+		"pk": 2,
+		"fields": {
+            "user_1" : 1,
+            "user_2" : 3,
+            "vote_user_1" : true,
+            "vote_user_2" : true,
+            "date" : "2022-03-10 10:00:00",
+            "last_message_date" : "2022-03-10 12:00:00"
+		}
+	}
+
+]

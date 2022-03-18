@@ -226,3 +226,11 @@ class ChatUpdateView(generic.UpdateView):
 class ChatDeleteView(generic.DeleteView):
     model = Chat
     success_url = reverse_lazy('chats-list')
+    
+def chat_choose(request):
+    return render(request, 'He_Loveapp/chat.html')
+
+def room(request, room_name):
+    return render(request, 'He_Loveapp/room.html', {
+        'room_name': room_name
+    })
