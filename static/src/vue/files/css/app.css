@@ -19,13 +19,17 @@
 
 	font-size: 16px;
 	font-family: "Sarala", sans-serif;
-	text-decoration: none;
+	text-decoration: none; 
+}
+
+a {
+	color: var(--black-color);
 }
 
 /* ----- Body ----- */
 
 body {
-	flex-flow: column wrap;
+	flex-flow: column nowrap;
 	display: flex;
 
 	height: 100%;
@@ -36,7 +40,7 @@ body {
 
 .content {
 	display: flex;
-	flex-flow: column wrap;
+	flex-flow: column nowrap;
 	flex: 1 1 auto;
 
 	margin: 8px;
@@ -63,12 +67,29 @@ body {
 	height: 24px;
 }
 
+.interests {
+	flex-flow: row wrap;
+	display: flex;
+	gap: 8px;
+}
+
+.interest {
+	background-color: var(--gray-transparent-color);
+	padding: 4px 8px;
+	border-radius: 16px;
+	font-size: 12px;
+}
+
 /* ----- Title bar ----- */
 
 header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+
 	flex: 0 1 auto;
 
-	flex-flow: row wrap;
+	flex-flow: row nowrap;
 	display: flex;
 	justify-content: center;
 	align-items: center;	
@@ -86,6 +107,30 @@ header .title {
 header .icon {
 	width: 48px;
 	height: 48px;
+}
+
+/* ----- NavBar ----- */
+
+.navbar {
+	flex-shrink: 0;
+	position: sticky;
+	bottom: 0;
+
+	flex: 0 1 auto;
+
+	flex-flow: row wrap;
+	display: flex;
+	justify-content: space-between;
+	padding: 16px 32px;
+	background-color: var(--white-color);
+}
+
+.navbar .button {
+	background-color: var(--light-gray-transparent-color);
+}
+
+.navbar .selected-view {
+	background-color: var(--primary-color);
 }
 
 /* ----- Cards ----- */
@@ -123,19 +168,6 @@ header .icon {
 	font-size: 24px;
 }
 
-.card .interests {
-	flex-flow: row wrap;
-	display: flex;
-	gap: 8px;
-}
-
-.card .interest {
-	background-color: var(--gray-transparent-color);
-	padding: 4px 8px;
-	border-radius: 16px;
-	font-size: 12px;
-}
-
 .card .buttons {
 	flex-flow: row wrap;
 	display: flex;
@@ -151,22 +183,6 @@ header .icon {
 .card .superlike {
 	width: 36px;
 	height: 36px;
-}
-
-/* ----- NavBar ----- */
-
-.navbar {
-	flex: 0 1 auto;
-
-	flex-flow: row wrap;
-	display: flex;
-	justify-content: space-between;
-	padding: 16px 32px;
-	background-color: var(--white-color);
-}
-
-.navbar .button {
-	background-color: var(--light-gray-transparent-color);
 }
 
 /* ----- Profile ----- */

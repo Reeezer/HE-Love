@@ -17,20 +17,49 @@
   </div>
 
   {% if user.is_authenticated %}
-  <div class="navbar">
-    <a class="button" href="{% url 'users-detail' user.id %}">
-      {% load static %} <img class="icon" src="{% static "src/vue/files/img/profile.png" %}" alt="profile"/>
-    </a>
-    <a class="button" href="{% url 'users-list' %}">
-      {% load static %} <img class="icon" src="{% static "src/vue/files/img/fire.png" %}" alt="swipe"/>
-    </a>
-    <a class="button" href="">
-      {% load static %} <img class="icon" src="{% static "src/vue/files/img/chat.png" %}" alt="chat"/>
-    </a>
-    <a class="button" href="{% url 'events-list' %}">
-      {% load static %} <img class="icon" src="{% static "src/vue/files/img/event.png" %}" alt="event"/>
-    </a>
-  </div>
+    <div class="navbar">
+      {% with request.resolver_match.view_name as view_name %}
+        {% if view_name == 'users-detail' %}
+          <a class="button selected-view" href="{% url 'users-detail' user.id %}">
+            {% load static %} <img class="icon" src="{% static "src/vue/files/img/profile-white.png" %}" alt="profile"/>
+          </a>
+        {% else %}
+          <a class="button" href="{% url 'users-detail' user.id %}">
+            {% load static %} <img class="icon" src="{% static "src/vue/files/img/profile.png" %}" alt="profile"/>
+          </a>
+        {% endif %}
+
+        {% if view_name == 'users-list' %}
+          <a class="button selected-view" href="{% url 'users-list' %}">
+            {% load static %} <img class="icon" src="{% static "src/vue/files/img/fire-white.png" %}" alt="swipe"/>
+          </a>
+        {% else %}
+          <a class="button" href="{% url 'users-list' %}">
+            {% load static %} <img class="icon" src="{% static "src/vue/files/img/fire.png" %}" alt="swipe"/>
+          </a>
+        {% endif %}
+
+        {% if view_name == 'chats-list' %}
+          <a class="button selected-view" href="">
+            {% load static %} <img class="icon" src="{% static "src/vue/files/img/chat-white.png" %}" alt="chat"/>
+          </a>
+        {% else %}
+          <a class="button" href="">
+            {% load static %} <img class="icon" src="{% static "src/vue/files/img/chat.png" %}" alt="chat"/>
+          </a>
+        {% endif %}
+
+        {% if view_name == 'events-list' %}
+          <a class="button selected-view" href="{% url 'events-list' %}">
+            {% load static %} <img class="icon" src="{% static "src/vue/files/img/event-white.png" %}" alt="event"/>
+          </a>
+        {% else %}
+          <a class="button" href="{% url 'events-list' %}">
+            {% load static %} <img class="icon" src="{% static "src/vue/files/img/event.png" %}" alt="event"/>
+          </a>
+        {% endif %}
+      {% endwith %}
+    </div>
   {% endif %}
 
   <script type="text/javascript" src="{% static 'src/vue/dist/js/chunk-vendors.js' %}"></script>

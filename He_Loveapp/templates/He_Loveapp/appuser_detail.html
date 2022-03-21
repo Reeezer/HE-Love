@@ -9,20 +9,24 @@
 	<div>Age: {{ appuser.get_age }}</div>
 	<div>Genre: {{ appuser.gender.name }}</div>
 	<div>Description: {{ appuser.description }}</div>
-	<div>Intérêts: 
+	<div class="interests">Intérêts:
 		{% for appuser_interest in appuser.get_interests %}
-			{{ appuser_interest.interest.description }}
+			<div class="interest">{{ appuser_interest.interest.description }}</div>
 		{% empty %}
-			---
+			<div class="interest">Aucune</div>
 		{% endfor %}
 	</div>
 	<div>Genres recherchés: 
 		{% for appuser_gender_interest in appuser.get_gender_interests %}
 			{{ appuser_gender_interest.gender.name }}
 		{% empty %}
-			---
+			Aucun
 		{% endfor %}
 	</div>
+	
+	{% if user.id == appuser.id %}
+		<a href="/accounts/logout">Logout</a>
+	{% endif %}
 </div>
 
 {% endblock %}

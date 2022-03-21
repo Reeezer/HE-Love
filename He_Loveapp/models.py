@@ -134,8 +134,8 @@ class Match(models.Model):
         self.user_1 = user_1
         self.user_2 = user_2
         self.vote_user_1 = vote_user_1
-        self.date = datetime.datetime.now
-        self.last_message_date = datetime.datetime.now
+        self.date = datetime.datetime.now()
+        self.last_message_date = datetime.datetime.now()
         
         
 class Chat(models.Model):
