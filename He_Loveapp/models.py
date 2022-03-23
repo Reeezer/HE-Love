@@ -33,19 +33,10 @@ class AppUser(User):
 
 class Picture(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='picture_user')
-    _file = models.TextField(db_column="file", blank=True)
+    path = models.ImageField(upload_to ='static_root/userimages')
     
     class Meta:
         verbose_name_plural="Pictures"
-
-    def set_file(self, file):
-        self._file = base64.encodestring(file)
-
-    def get_file(self):
-        return base64.decodestring(self._file)
-
-    data = property(get_file, set_file)
-
 
 
 class Event(models.Model):
