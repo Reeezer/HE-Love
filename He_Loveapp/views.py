@@ -36,14 +36,23 @@ def sign_up(request):
     context['form'] = form
     return render(request, 'registration/sign_up.html', context)
 
-@login_required
 def swipe(request_id, pk, is_like):
     user_2 = AppUser.objects.get(id=pk)
     user_1 = AppUser.objects.get(id=request_id)
     
     if is_like == True:
         user_2.rank_up(1)
-    
+    # if we put a dislike, we do want to not see this person anymore until 3 days
+    elif is_like == False: 
+        # if the dislike already exists, only modify it
+        if Dislike.objects.filter(Q(user=user_1) & Q(user_disliked=user_2)).exists():
+            dislike = Dislike.objects.get(Q(user=user_1) & Q(user_disliked=user_2))
+            dislike.refresh()
+            dislike.save()
+        # if the dislike doesn't exists, let's create it
+        else:
+            Dislike.objects.create(user=user_1, user_disliked=user_2)
+
     # if the match already exists (the other user has already liked or disliked you), only modify it
     if Match.objects.filter((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2))).exists():
         match = Match.objects.get((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2)))
@@ -87,8 +96,11 @@ class UserListView(LoginRequiredMixin, generic.ListView):
         # People who we already have a match with
         matches_3 = Match.objects.filter((Q(user_2=current_user) | Q(user_1=current_user)) & ~Q(vote_user_1=None) & ~Q(vote_user_2=None)).values('user_1')
         matches_4 = Match.objects.filter((Q(user_2=current_user) | Q(user_1=current_user)) & ~Q(vote_user_1=None) & ~Q(vote_user_2=None)).values('user_2')
+        # People that we already disliked within 3 days
+        disliked_users = Dislike.objects.filter(Q(user=current_user))
+        disliked_3days = [disliked_user.user_disliked.id for disliked_user in disliked_users if not disliked_user.is_valid_now()]
         
-        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4)).order_by('-rank')
+        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('-rank')
 
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):

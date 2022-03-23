@@ -120,13 +120,15 @@ class Match(models.Model):
             self.vote_user_1 = is_like
         elif user == self.user_2:
             self.vote_user_2 = is_like
+        else:
+            return
             
         self.date = datetime.datetime.now()
         self.last_message_date = datetime.datetime.now()
         
         if self.vote_user_1 == True and self.vote_user_2 == True:
-            self.user_1.rank_up(10)
-            self.user_2.rank_up(10)
+            self.user_1.rank_up(5)
+            self.user_2.rank_up(5)
             Chat.objects.create(user_sender=user, user_receiver=self.get_opposite_user(user), message="Entered in a new chat")
         
     @classmethod
@@ -164,4 +166,13 @@ class User_gender_interest(models.Model):
         verbose_name_plural="User_gender_interests"
 
 
-
+class Dislike(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='dislike_user', default=1)
+    user_disliked = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='dislike_user_disliked', default=1)
+    date = models.DateField(default=datetime.date.today)
+    
+    def refresh(self):
+        self.date = datetime.date.today()
+        
+    def is_valid_now(self):
+        return datetime.date.today() - self.date > datetime.timedelta(days=3)
