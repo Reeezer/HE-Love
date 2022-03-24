@@ -15,7 +15,7 @@ jobs:
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.DEPLOY }} 
+          ssh-private-key: ${{ secrets.DEPLOY }}
       - name: Add known host
         run: |
           ssh-keyscan -p ${{ secrets.DEPLOY_HOST_SSH_PORT }} ${{ secrets.DEPLOY_HOST }}
