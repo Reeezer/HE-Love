@@ -5,28 +5,52 @@
 {% block content %}
 
 <div class="profile">
-	<div>Prénom: {{ appuser.username }}</div>
-	<div>Age: {{ appuser.get_age }}</div>
-	<div>Genre: {{ appuser.gender.name }}</div>
-	<div>Description: {{ appuser.description }}</div>
-	<div class="interests">Intérêts:
-		{% for appuser_interest in appuser.get_interests %}
-			<div class="interest">{{ appuser_interest.interest.description }}</div>
-		{% empty %}
-			<div class="interest">Aucune</div>
-		{% endfor %}
+	<div class="section">
+		<div class="top">
+			<div class="username">{{ appuser.username }} {{ appuser.get_age }}</div>
+			{% if user.id == appuser.id %}
+				<a class="logout-button" href="/accounts/logout">Logout</a>
+			{% endif %}
+		</div>
 	</div>
-	<div>Genres recherchés: 
-		{% for appuser_gender_interest in appuser.get_gender_interests %}
-			{{ appuser_gender_interest.gender.name }}
-		{% empty %}
-			Aucun
-		{% endfor %}
+
+	<div class="section">
+		<div class="title">Description</div>
+		<div class="info">{{ appuser.description }}</div>	
 	</div>
 	
+	<div class="section">
+		<div class="title">Genre</div>
+		<div class="info">{{ appuser.gender.name }}</div>	
+	</div>
+
+	<div class="section">
+		<div class="title">Intérêts</div>
+		<div class="interests">
+			{% for appuser_interest in appuser.get_interests %}
+				<div class="interest" style="font-size: 14px">{{ appuser_interest.interest.description }}</div>
+			{% empty %}
+				<div class="interest">Aucune</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="title">Genres recherchés</div>
+		<div class="interests">
+			{% for appuser_gender_interest in appuser.get_gender_interests %}
+				<div class="interest" style="font-size: 14px">{{ appuser_gender_interest.gender.name }}</div>
+			{% empty %}
+			<div class="interest">Aucun</div>
+			{% endfor %}
+		</div>
+	</div>
+
 	{% if user.id == appuser.id %}
-		<a href="/accounts/logout">Logout</a>
+	<div class="profile-buttons">
+		<a class="profile-button" href="">Modifier</a>
+	</div>
 	{% endif %}
-</div>
+</div>	
 
 {% endblock %}
