@@ -4,78 +4,26 @@
 
 {% block content %}
 
-<p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
-
-<table>
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Rang</th>
-			<th>Nom</th>
-			<th>Age</th>
-			<th>Genre</th>
-			<th>Recherche</th>
-			<th>Description</th>
-			<th>Intérêts</th>
-			<th></th>
-		</tr>
-	</thead>
-
-	{% for appuser in object_list %}
-
-	<tr>
-		<td>
-			{{ appuser.id }}
-		</td>
-		<td>
-			{{ appuser.rank }}
-		</td>
-		<td>
-			{{ appuser.username }}
-		</td>
-		<td>
-			{{ appuser.get_age }}
-		</td>
-		<td>
-			{{ appuser.gender.name }}
-		</td>
-		<td>
-			{% for appuser_gender_interest in appuser.get_gender_interests %}
-				{{ appuser_gender_interest.gender.name }}
-			{% empty %}
-				---
-			{% endfor %}
-		</td>
-		<td>
-			{{ appuser.description }}
-		</td>
-		<td>
-			{% for appuser_interest in appuser.get_interests %}
-				{{ appuser_interest.interest.description }}
-			{% empty %}
-				---
-			{% endfor %}
-		</td>
-		<td>
-			<a href="{% url 'users-detail' appuser.id %}">Détails</a>
-            <a href="{% url 'users-like' appuser.id %}">Like</a>
-			<a href="{% url 'users-superlike' appuser.id %}">Superlike</a>
-            <a href="{% url 'users-dislike' appuser.id %}">Dislike</a>
-		</td>
-	</tr>
-
-	{% endfor %}
-</table>
-
-<style>
-	table, th, td {
-		border: 1px solid;
-	}
-
-	table {
-		text-align:center;
-	}
-</style>
+{% for appuser in object_list %}
+	<div class="card">
+		<div class="informations">
+			<div class="username"><strong class="username">{{ appuser.username }}</strong> {{ appuser.get_age }}</div>
+			<div class="interests">
+				{% for appuser_interest in appuser.get_interests %}
+					<div class="interest">{{ appuser_interest.interest.description }}</div>
+				{% empty %}
+					<div class="interest">Aucune</div>
+				{% endfor %}
+			</div>
+			<div class="description">{{ appuser.description }}</div>
+		</div>
+		<div class="buttons">
+			<a class="button" href="{% url 'users-dislike' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
+			<a class="button superlike" href="{% url 'users-superlike' appuser.id %}">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
+			<a class="button" href="{% url 'users-like' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
+		</div>
+	</div>
+{% endfor %}
 
 {% endblock %}
 
