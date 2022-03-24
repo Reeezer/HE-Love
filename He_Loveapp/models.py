@@ -19,13 +19,18 @@ class Interest(models.Model):
 
 def user_Image_Files_directory_path(instance,filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return f'userimages/user_{instance.user.id}/pp.{filename.split(".")[-1]}'
+    if isinstance(instance,AppUser):
+        return f'userimages/user_{instance.id}/pp.{filename.split(".")[-1]}'
+    else:
+        return f'userimages/user_{instance.user.id}/pp.{filename.split(".")[-1]}'
+    
+
 
 class AppUser(User):
     birth_date = models.DateField()
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender')
     description = models.TextField()
-    profilePicture = models.ImageField(upload_to="TODO_CHANGE")
+    profilePicture = models.ImageField(upload_to=user_Image_Files_directory_path)
     
     def __str__(self):
         return self.username
