@@ -1,9 +1,10 @@
 [
 	{
 		"model": "He_Loveapp.appuser",
-		"pk": 1,
+		"pk": "1",
 		"fields": {
-			"name": "Leon",
+			"username": "Leon",
+			"password": "leonleon",
 			"birth_date": "2001-03-27",
 			"gender": "1",
 			"description": "Je suis un beau-gosse"
@@ -11,11 +12,23 @@
 	},
 	{
 		"model": "He_Loveapp.appuser",
-		"pk": 2,
+		"pk": "2",
 		"fields": {
-			"name": "Luca",
+			"username": "Luca",
+			"password": "lucaluca",
 			"birth_date": "1998-05-14",
 			"gender": "1",
+			"description": "Je suis competent"
+		}
+	},
+	{
+		"model": "He_Loveapp.appuser",
+		"pk": "3",
+		"fields": {
+			"username": "lucaaaaa",
+			"password": "lucaluca",
+			"birth_date": "1998-05-14",
+			"gender": "2",
 			"description": "Je suis competent"
 		}
 	}

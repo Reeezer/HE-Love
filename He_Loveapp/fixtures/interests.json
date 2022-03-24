@@ -1,0 +1,695 @@
+[
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 1,
+		"fields": {
+			"description": "Gastronomie"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 2,
+		"fields": {
+			"description": "Sushi"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 3,
+		"fields": {
+			"description": "Théâtre"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 4,
+		"fields": {
+			"description": "Sneakers"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 5,
+		"fields": {
+			"description": "Instagram"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 6,
+		"fields": {
+			"description": "Marche à pied"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 7,
+		"fields": {
+			"description": "Course à pied"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 8,
+		"fields": {
+			"description": "Voyage"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 9,
+		"fields": {
+			"description": "Discussion dans une autre langue"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 10,
+		"fields": {
+			"description": "Cinéma"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 11,
+		"fields": {
+			"description": "Golf"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 12,
+		"fields": {
+			"description": "Photographie"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 13,
+		"fields": {
+			"description": "Lecture"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 14,
+		"fields": {
+			"description": "Sports"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 15,
+		"fields": {
+			"description": "Café"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 16,
+		"fields": {
+			"description": "Karaoké"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 17,
+		"fields": {
+			"description": "Prendre un verre"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 18,
+		"fields": {
+			"description": "Itinéraire gourmand"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 19,
+		"fields": {
+			"description": "Investissement"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 20,
+		"fields": {
+			"description": "Promener le chien"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 21,
+		"fields": {
+			"description": "Skateboard"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 22,
+		"fields": {
+			"description": "Navigation"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 23,
+		"fields": {
+			"description": "Shopping"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 24,
+		"fields": {
+			"description": "Brunch"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 25,
+		"fields": {
+			"description": "Introverti(e)"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 26,
+		"fields": {
+			"description": "Mode de seconde main"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 27,
+		"fields": {
+			"description": "Shopping de seconde main"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 28,
+		"fields": {
+			"description": "Road trips"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 29,
+		"fields": {
+			"description": "Fripes"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 30,
+		"fields": {
+			"description": "Voguing"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 31,
+		"fields": {
+			"description": "Couchsurfing"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 32,
+		"fields": {
+			"description": "Happy hour"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 33,
+		"fields": {
+			"description": "Se faire des amis"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 34,
+		"fields": {
+			"description": "Toujours partant(e)"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 35,
+		"fields": {
+			"description": "Relations sérieuses"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 36,
+		"fields": {
+			"description": "Rencontres sans permission"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 37,
+		"fields": {
+			"description": "Randonnée"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 38,
+		"fields": {
+			"description": "Extraverti(e)"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 39,
+		"fields": {
+			"description": "Pêche"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 40,
+		"fields": {
+			"description": "Tennis"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 41,
+		"fields": {
+			"description": "Pétanque"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 42,
+		"fields": {
+			"description": "Expositions"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 43,
+		"fields": {
+			"description": "Ski"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 44,
+		"fields": {
+			"description": "Snowboard"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 45,
+		"fields": {
+			"description": "Street food"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 46,
+		"fields": {
+			"description": "Festivals"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 47,
+		"fields": {
+			"description": "Crossfit"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 48,
+		"fields": {
+			"description": "Sports mécaniques"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 49,
+		"fields": {
+			"description": "E-sports"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 50,
+		"fields": {
+			"description": "Escalade"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 51,
+		"fields": {
+			"description": "Pâtisserie"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 52,
+		"fields": {
+			"description": "Blogs"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 53,
+		"fields": {
+			"description": "Végétalisme"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 54,
+		"fields": {
+			"description": "Start-ups"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 55,
+		"fields": {
+			"description": "Tatouage"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 56,
+		"fields": {
+			"description": "Vegan"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 57,
+		"fields": {
+			"description": "Surf"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 58,
+		"fields": {
+			"description": "Ecrivain(e)"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 59,
+		"fields": {
+			"description": "Végétarien(ne)"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 60,
+		"fields": {
+			"description": "Mode"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 61,
+		"fields": {
+			"description": "Jeux vidéo"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 62,
+		"fields": {
+			"description": "Astrologie"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 63,
+		"fields": {
+			"description": "Motos"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 64,
+		"fields": {
+			"description": "Spiritualité"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 65,
+		"fields": {
+			"description": "Cuisine"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 66,
+		"fields": {
+			"description": "Football"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 67,
+		"fields": {
+			"description": "Sur la piste"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 68,
+		"fields": {
+			"description": "Jardinage"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 69,
+		"fields": {
+			"description": "Cuisinier(ère) amateur(trice)"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 70,
+		"fields": {
+			"description": "Art"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 71,
+		"fields": {
+			"description": "Bricolage"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 72,
+		"fields": {
+			"description": "Politique"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 73,
+		"fields": {
+			"description": "Cyclisme"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 74,
+		"fields": {
+			"description": "Musée"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 75,
+		"fields": {
+			"description": "Nature"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 76,
+		"fields": {
+			"description": "Activisme"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 77,
+		"fields": {
+			"description": "Pique-nique"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 78,
+		"fields": {
+			"description": "Comédie"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 79,
+		"fields": {
+			"description": "Musique"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 80,
+		"fields": {
+			"description": "Netflix"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 81,
+		"fields": {
+			"description": "Disney"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 82,
+		"fields": {
+			"description": "Fêtes"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 83,
+		"fields": {
+			"description": "Tarot"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 84,
+		"fields": {
+			"description": "Podcasts"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 85,
+		"fields": {
+			"description": "Personne à chien"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 86,
+		"fields": {
+			"description": "BBQ"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 87,
+		"fields": {
+			"description": "Bières artisanales"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 88,
+		"fields": {
+			"description": "Natation"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 89,
+		"fields": {
+			"description": "Thé"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 90,
+		"fields": {
+			"description": "Jeux de société"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 91,
+		"fields": {
+			"description": "Tango"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 92,
+		"fields": {
+			"description": "Quiz et culture générale"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 93,
+		"fields": {
+			"description": "Bénévolat"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 94,
+		"fields": {
+			"description": "Ecologie"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 95,
+		"fields": {
+			"description": "Vin"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 96,
+		"fields": {
+			"description": "Vlogs"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 97,
+		"fields": {
+			"description": "Personne à chat"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 98,
+		"fields": {
+			"description": "Fitness"
+		}
+	},
+	{
+		"model": "He_Loveapp.interest",
+		"pk": 99,
+		"fields": {
+			"description": "Yoga"
+		}
+	}
+]

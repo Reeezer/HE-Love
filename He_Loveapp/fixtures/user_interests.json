@@ -1,0 +1,138 @@
+[
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 2,
+		"fields": {
+			"user": 1,
+			"interest": 2
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 3,
+		"fields": {
+			"user": 1,
+			"interest": 3
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 4,
+		"fields": {
+			"user": 2,
+			"interest": 1
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 5,
+		"fields": {
+			"user": 2,
+			"interest": 2
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 6,
+		"fields": {
+			"user": 3,
+			"interest": 45
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 7,
+		"fields": {
+			"user": 3,
+			"interest": 15
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 8,
+		"fields": {
+			"user": 3,
+			"interest": 18
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 9,
+		"fields": {
+			"user": 3,
+			"interest": 65
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 10,
+		"fields": {
+			"user": 2,
+			"interest": 15
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 11,
+		"fields": {
+			"user": 2,
+			"interest": 18
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 12,
+		"fields": {
+			"user": 2,
+			"interest": 65
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 13,
+		"fields": {
+			"user": 4,
+			"interest": 15
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 14,
+		"fields": {
+			"user": 4,
+			"interest": 18
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 15,
+		"fields": {
+			"user": 4,
+			"interest": 51
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 16,
+		"fields": {
+			"user": 4,
+			"interest": 46
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 17,
+		"fields": {
+			"user": 4,
+			"interest": 9
+		}
+	},
+	{
+		"model": "He_Loveapp.user_interest",
+		"pk": 18,
+		"fields": {
+			"user": 4,
+			"interest": 26
+		}
+	}
+]

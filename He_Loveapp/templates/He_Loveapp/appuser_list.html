@@ -1,41 +1,33 @@
 {% extends 'He_Loveapp/base.html' %}
 
-{% block title %}Users{% endblock %}
+{% block title %}Utilisateurs{% endblock %}
 
 {% block content %}
 
-<table>
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Name</th>
-			<th>Age</th>
-			<th>Gender</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-
-	{% for user in object_list %}
-
-	<tr>
-		<td>
-			{{ user.id }}
-		</td>
-		<td>
-			{{ user.name }}
-		</td>
-		<td>
-			{{ user.get_age }}
-		</td>
-		<td>
-			{{ user.gender.name }}
-		</td>
-		<td>
-			{{ user.description }}
-		</td>
-	</tr>
-
-	{% endfor %}
-</table>
+{% for appuser in object_list %}
+	<div class="card">
+		<div class="informations">
+			<div class="username"><strong class="username">{{ appuser.username }}</strong> {{ appuser.get_age }}</div>
+			<div class="interests">
+				{% for appuser_interest in appuser.get_interests %}
+					<div class="interest">{{ appuser_interest.interest.description }}</div>
+				{% empty %}
+					<div class="interest">Aucune</div>
+				{% endfor %}
+			</div>
+			<div class="description">{{ appuser.description }}</div>
+		</div>
+		<div class="buttons">
+			<a class="button" href="{% url 'users-dislike' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
+			<a class="button superlike" href="{% url 'users-superlike' appuser.id %}">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
+			<a class="button" href="{% url 'users-like' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
+		</div>
+	</div>
+{% empty %}
+	<div>
+		Aucun utilisateur pour le moment ...
+	</div>
+{% endfor %}
 
 {% endblock %}
+
