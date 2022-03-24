@@ -33,7 +33,7 @@ class AppUser(User):
 
 class Picture(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='picture_user')
-    path = models.ImageField(upload_to ='static_root/userimages')
+    path = models.ImageField(upload_to ='userimages/')
     
     class Meta:
         verbose_name_plural="Pictures"

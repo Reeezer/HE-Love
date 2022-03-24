@@ -29,10 +29,10 @@ def tempTestView(request):
     if request.method == 'POST':
         form = ImageForm(request.POST,request.FILES)
         if form.is_valid():
-            id = 0
-            img = form.cleaned_data("")
+            name = form.cleaned_data.get("name")
+            img = form.cleaned_data.get("image")
             obj = Picture.objects.create(
-                User = User.objects.get(id=0),
+                user = AppUser.objects.get(username=name),
                 path = img
             )
             obj.save()

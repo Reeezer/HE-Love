@@ -1,6 +1,8 @@
 from django.urls import path
 
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.tempTestView, name='home'),
@@ -14,5 +16,4 @@ urlpatterns = [
     path('events/<pk>/', views.EventDetailView.as_view(), name='events-detail'),
     path('events/<pk>/update/', views.EventUpdateView.as_view(), name='events-update'),
     path('events/<pk>/delete/', views.EventDeleteView.as_view(), name='events-delete'),
-    
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
