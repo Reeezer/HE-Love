@@ -19,7 +19,7 @@
 		</div>
 		<div class="buttons">
 			<a class="button" href="{% url 'users-dislike' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
-			<a class="button superlike" href="{% url 'users-superlike' appuser.id %}">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
+			<a class="button minus-button" href="{% url 'users-superlike' appuser.id %}">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
 			<a class="button" href="{% url 'users-like' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
 		</div>
 	</div>

@@ -64,6 +64,13 @@ body {
 	width: 48px;
 	height: 48px;
 	border-radius: 8px;
+
+	
+}
+
+.minus-button {
+	width: 36px;
+	height: 36px;
 }
 
 .icon {
@@ -134,9 +141,8 @@ header .icon {
 	background-color: var(--white-color);
 }
 
-.navbar .button {
-	background-color: var(--light-gray-transparent-color);
-	/* border: solid 2px var(--primary-color);  */
+.navbar .button, .profile .button {
+	border: solid 2px var(--primary-color); 
 }
 
 .navbar .selected-view {
@@ -190,11 +196,6 @@ header .icon {
 	background-color: var(--white-color);
 }
 
-.card .superlike {
-	width: 36px;
-	height: 36px;
-}
-
 /* ----- Profile ----- */
 
 .profile {
@@ -245,6 +246,8 @@ header .icon {
 	flex-flow: row wrap;
 	display: flex;
 	justify-content: space-around;
+
+	padding-top: 16px;
 }
 
 .profile .profile-button {
@@ -254,8 +257,6 @@ header .icon {
 	padding: 4px 8px; 
 }
 
-.profile .logout-button {
+.profile .button {
 	border-radius: 4px;
-	padding: 4px 8px; 
-	border: solid 1px var(--black-color);
 }

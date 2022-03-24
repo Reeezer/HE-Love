@@ -9,7 +9,9 @@
 		<div class="top">
 			<div class="username">{{ appuser.username }} {{ appuser.get_age }}</div>
 			{% if user.id == appuser.id %}
-				<a class="logout-button" href="/accounts/logout">Logout</a>
+				<a class="button minus-button" href="/accounts/logout">
+					{% load static %} <img class="minus-icon" src="{% static "src/vue/files/img/logout.png" %}" alt="logout"/>
+				</a>
 			{% endif %}
 		</div>
 	</div>
