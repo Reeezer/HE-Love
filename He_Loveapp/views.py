@@ -49,6 +49,7 @@ def swipe(request_id, pk, is_like):
             dislike = Dislike.objects.get(Q(user=user_1) & Q(user_disliked=user_2))
             dislike.refresh()
             dislike.save()
+            # TODO maybe set the pair user_1, user_2 as unique in this table
         # if the dislike doesn't exists, let's create it
         else:
             Dislike.objects.create(user=user_1, user_disliked=user_2)
@@ -108,9 +109,8 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class RegisterForm(UserCreationForm):
-    birth_date = forms.DateField(initial=datetime.date.today, label='Birth date')
-    #description = forms.CharField(widget=forms.Textarea, label='Description')
-    #gender = forms.MultipleChoiceField(widget=forms.RadioSelect, choices=Gender.values(), label='Gender')
+    user_gender_interests = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Genres recherchés')
+    user_interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), label="Intérêts")
 
     class Meta:
         model = AppUser
@@ -118,9 +118,16 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
-        user.birth_date = self.cleaned_data['birth_date']
-        user.gender = self.cleaned_data['gender']
-        user.description = self.cleaned_data['description']
+        if commit:
+            user.save()
+        gender_interests = self.cleaned_data['user_gender_interests']
+        user_interests = self.cleaned_data['user_interests']
+        
+        for gender_interest in gender_interests:
+            User_gender_interest.objects.create(user=user, gender=gender_interest)
+        for interest in user_interests:
+            User_interest.objects.create(user=user, interest=interest)
+        
         if commit:
             user.save()
         return user
@@ -128,7 +135,7 @@ class RegisterForm(UserCreationForm):
 
 class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = AppUser
-    fields = ['username', 'birth_date', 'gender', 'description']
+    fields = ['birth_date', 'gender', 'description']
     success_url = reverse_lazy('users-list')
 
 

@@ -50,7 +50,7 @@
 
 	{% if user.id == appuser.id %}
 	<div class="profile-buttons">
-		<a class="profile-button" href="">Modifier</a>
+		<a class="profile-button" href="{% url 'users-update' user.id %}">Modifier</a>
 	</div>
 	{% endif %}
 </div>	

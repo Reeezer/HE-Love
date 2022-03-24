@@ -1,20 +1,16 @@
 {% extends 'He_Loveapp/base.html' %}
 
 {% block title %}
-	{% if object is None %}
-	Nouvel utilisateur	
-	{% else %}
 	Modication utilisateur
-	{% endif %}
 {% endblock %}
 
 {% block content %}
 
 <div class="container">
-  	<form action="" method="post">
+  	<form method="post">
     	{% csrf_token %}
     	{{ form.as_p }}
-		<input type="submit" value="{% if object is None %}Save{% else %}Update{% endif %}"/>
+		<input type="submit" value="Enregistrer"/>
   	</form>
 </div>
 

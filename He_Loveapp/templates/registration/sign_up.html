@@ -1,5 +1,5 @@
 {% extends 'He_Loveapp/base.html' %} 
-{% block title %}Se connecter{% endblock %}
+{% block title %}S'enregistrer{% endblock %}
 {% block content %}
 
 <form method="post">
@@ -7,7 +7,5 @@
 	{{form.as_p}}
 	<input type="submit" value="Sign up" />
 </form>
-
-<a href="{% url 'sign-up' %}"></a>
 
 {% endblock %}
