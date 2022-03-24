@@ -18,12 +18,22 @@ class Interest(models.Model):
     def __str__(self):
         return self.description
 
+def user_Image_Files_directory_path(instance,filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    if isinstance(instance,AppUser):
+        return f'userimages/user_{instance.id}/pp.{filename.split(".")[-1]}'
+    else:
+        return f'userimages/user_{instance.user.id}/pp.{filename.split(".")[-1]}'
+    
+
 
 class AppUser(User):
+    
     birth_date = models.DateField(blank=False, default=datetime.datetime.now)
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
     description = models.TextField(blank=False, default="Hello !")
     rank = models.IntegerField(default=0)
+    profilePicture = models.ImageField(upload_to=user_Image_Files_directory_path)
     
     def __str__(self):
         return self.username
@@ -47,21 +57,13 @@ class AppUser(User):
 
 
 class Picture(models.Model):
-    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='picture_user')
-    _file = models.TextField(db_column="file", blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='picture_user')
+    path = models.ImageField(upload_to =user_Image_Files_directory_path)
     
     class Meta:
         verbose_name_plural="Pictures"
 
-    def set_file(self, file):
-        self._file = base64.encodestring(file)
-
-    def get_file(self):
-        return base64.decodestring(self._file)
-
-    data = property(get_file, set_file)
-
-
+        
 class Event(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField()

@@ -1,3 +1,5 @@
+from tkinter import Image
+from urllib import request
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic, View
@@ -24,6 +26,25 @@ from .models import *
 def index(request):
     return render(request, 'He_Loveapp/index.html')
 
+from .forms import ImageForm
+def tempTestView(request):
+    context = {}
+    if request.method == 'POST':
+        form = ImageForm(request.POST,request.FILES)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            img = form.cleaned_data.get("image")
+            obj = Picture.objects.create(
+                user = AppUser.objects.get(username=name),
+                path = img
+            )
+            obj.save()
+    else:
+        form = ImageForm()
+            
+    
+    context['form'] = ImageForm()
+    return render(request,"He_Loveapp/picture_list.html",context)
 
 def sign_up(request):
     context = {}
@@ -134,9 +155,10 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class PictureListView(LoginRequiredMixin, generic.ListView):
     model = Picture
-
+    
     def get_queryset(self):
-        return Picture.objects.all()
+        #current_user = AppUser.objects.get(id=self.kwargs["pk"])
+        return Picture.objects.filter(user=self.kwargs["pk"])
 
 
 class PictureDetailView(LoginRequiredMixin, generic.DetailView):

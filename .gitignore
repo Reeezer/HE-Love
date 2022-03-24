@@ -2,6 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django,python,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python,visualstudiocode
 
+media_root/*
 log.txt
 
 ### Django ###
@@ -115,6 +116,10 @@ ipython_config.py
 #   commonly ignored for libraries.
 #   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
 #poetry.lock
+
+# UserImages
+static_root\userimages\*
+
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
