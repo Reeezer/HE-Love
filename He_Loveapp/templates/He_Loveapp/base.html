@@ -4,12 +4,14 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 
-<body>
+<body style="visibility:hidden">
   <header>
     {% load static %} <img class="icon" src="{% static "src/vue/files/img/fire.png" %}" alt="swipe"/>
-    <a class="title" style="color: inherit;" href="{% url 'home' %}">
-      he-love
-    </a>
+    <h1>
+      <a class="title" style="color: inherit;" href="{% url 'home' %}">
+        he-love
+      </a>
+    </h1>
   </header>
 
   <div class="content">
@@ -66,3 +68,12 @@
   <script type="text/javascript" src="{% static 'src/vue/dist/js/app.js' %}"></script>
   <link href="{% static 'src/vue/files/css/app.css' %}" rel=stylesheet>
 </body>
+
+<script>
+  // Only display page when everything is loaded
+  document.onreadystatechange = function() {
+    if (document.readyState === "complete") {
+      document.querySelector("body").style.visibility = "visible";
+    }
+  };
+</script>

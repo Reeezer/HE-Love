@@ -23,6 +23,10 @@
 			<a class="button" href="{% url 'users-like' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
 		</div>
 	</div>
+{% empty %}
+	<div>
+		Aucun utilisateur pour le moment ...
+	</div>
 {% endfor %}
 
 {% endblock %}
