@@ -16,6 +16,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.DEPLOY }}
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
       - name: Add known host
         run: |
           ssh-keyscan -p ${{ secrets.DEPLOY_HOST_SSH_PORT }} ${{ secrets.DEPLOY_HOST }}
