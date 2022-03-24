@@ -85,6 +85,8 @@ body {
 	flex-flow: row wrap;
 	display: flex;
 	gap: 8px;
+
+	list-style-type: none;
 }
 
 .interest {
@@ -261,4 +263,32 @@ header .icon {
 
 .profile .button {
 	border-radius: 4px;
+}
+
+/* ----- Forms ------ */
+
+.forms-box {
+	display: flex;
+	flex-flow: row wrap;
+	gap: 8px;
+}
+
+.forms-box li {
+	background-color: var(--gray-transparent-color);
+	padding: 4px 8px;
+	border-radius: 16px;
+}
+
+.forms-box li label {
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.forms-box li label [type=checkbox]{
+	display: none;
+} 
+
+.forms-box .selected {
+	background-color: var(--primary-color);
+	color: var(--white-color);
 }

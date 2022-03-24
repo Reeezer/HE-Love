@@ -109,8 +109,8 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class RegisterForm(UserCreationForm):
-    user_gender_interests = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Genres recherchés')
-    user_interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), label="Intérêts")
+    user_gender_interests = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Genres recherchés', widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
+    user_interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), label="Intérêts", widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
 
     class Meta:
         model = AppUser

@@ -8,4 +8,27 @@
 	<input type="submit" value="Sign up" />
 </form>
 
+<script>
+	function changeColor(name) {
+		var i = 0;
+		var checkbox = document.getElementById(name + i);
+		while (checkbox != null) {
+			checkbox.addEventListener('change', (event) => {
+				li = event.target.parentElement.parentElement;
+				if (event.currentTarget.checked) {
+					li.classList.add("selected");
+				} else {
+					li.classList.remove("selected");
+				}
+			});
+			
+			i++;
+			var checkbox = document.getElementById(name + i);
+		}
+	}
+
+	changeColor("id_user_gender_interests_");
+	changeColor("id_user_interests_");
+</script>
+
 {% endblock %}
