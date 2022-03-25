@@ -323,3 +323,7 @@ form input[type="submit"] {
 	padding: 4px 8px;
 	width: 96px;
 }
+
+textarea {
+	height: 128px;
+}

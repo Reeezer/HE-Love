@@ -22,7 +22,7 @@ class Interest(models.Model):
 class AppUser(User):
     birth_date = models.DateField(blank=False, default=datetime.datetime.now)
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
-    description = models.TextField(blank=False, default="Hello !")
+    description = models.TextField(blank=False, default="Hello !", max_length=300)
     rank = models.IntegerField(default=0)
     
     def __str__(self):
@@ -102,9 +102,6 @@ class Match(models.Model):
        
         else:
             return False, "Waiting for match"
-        
-    def get_last_message_date(self):
-        return self.last_message_date
     
     def get_opposite_user(self, user):
         if user == self.user_1:

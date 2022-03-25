@@ -22,7 +22,7 @@ from .models import *
 
 @login_required
 def index(request):
-    return render(request, 'He_Loveapp/index.html')
+    return redirect('users-list')
 
 
 def sign_up(request):
