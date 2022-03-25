@@ -125,8 +125,11 @@ class RegisterForm(UserCreationForm):
         
         for gender_interest in gender_interests:
             User_gender_interest.objects.create(user=user, gender=gender_interest)
+        i = 0
         for interest in user_interests:
-            User_interest.objects.create(user=user, interest=interest)
+            if i < 5: 
+                User_interest.objects.create(user=user, interest=interest)
+                i += 1
         
         if commit:
             user.save()
