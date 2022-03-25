@@ -292,3 +292,34 @@ header .icon {
 	background-color: var(--primary-color);
 	color: var(--white-color);
 }
+
+form {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+	border-radius: 8px;
+	padding: 8px;
+}
+
+form p {
+	width: 100%;
+	display: flex;
+	flex-flow: column wrap;
+	gap: 2px;
+}
+
+.helptext, form ul li {
+	font-size: 14px;
+	color: var(--black-transparent-color);
+}
+
+form input[type="submit"] {
+	border-radius: 8px;
+	background-color: var(--primary-color);
+	color: var(--white-color);
+	cursor: pointer;
+	padding: 4px 8px;
+	width: 96px;
+}
