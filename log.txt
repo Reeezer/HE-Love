@@ -1,13 +1,7 @@
-SWIPE
-leon
-root
-+++
-doesn't existsSWIPE
-leon
-louise
-+++
-doesn't existsSWIPE
-leon
-lucaaaa
-+++
-doesn't exists
+
+request.user : user_1
+
+user_1 : user_1
+user_2 : user_2
+matches : Match object (1)
+chat : <QuerySet [<Chat: Chat object (1)>, <Chat: Chat object (2)>, <Chat: Chat object (3)>, <Chat: Chat object (4)>, <Chat: Chat object (5)>, <Chat: Chat object (6)>]>
