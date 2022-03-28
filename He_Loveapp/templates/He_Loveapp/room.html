@@ -1,0 +1,87 @@
+{% extends 'He_Loveapp/base.html' %}
+
+{% block title %}Room{% endblock %}
+
+{% block content %}
+    <text>Welcome in {{users_1}} and {{users_2}} chat</text><br>
+    <text>Match : {{match.pk}}</text><br>
+<textarea id="chat-log" cols="100" rows="20">
+{% for chat in chats %}
+{{chat.user_sender}} : {{chat.message}} ({{chat.date|date:'Y-m-d'}} {{chat.date|time:'H:i:s'}} [UTC/GTM+0])
+{% endfor %}
+</textarea><br>
+    <input id="chat-message-input" type="text" size="100"><br>
+    <input id="chat-message-submit" type="button" value="Send">
+    {{ room_name|json_script:"room-name" }}
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#chat-log').value += (data.sender + ' : ' + data.message +' ('+(data.date_time) +') [UTC/GTM+0]\n\n');
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+
+            var pad = function(num) { return ('00'+num).slice(-2) };
+            var date;
+            date = new Date();
+            date = date.getUTCFullYear()         + '-' +
+                    pad(date.getUTCMonth() + 1)  + '-' +
+                    pad(date.getUTCDate())       + ' ' +
+                    pad(date.getUTCHours())      + ':' +
+                    pad(date.getUTCMinutes())    + ':' +
+                    pad(date.getUTCSeconds());
+
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const sender = "{{user.username}}";
+            const message = messageInputDom.value;
+            const date_time = date
+            const insertion = InsertRecord(message,date);
+            
+            chatSocket.send(JSON.stringify({
+                'sender': sender,
+                'message': message,
+                'date_time' : date_time,
+                'insertion' : insertion
+            }));
+            messageInputDom.value = '';
+        };
+
+        function InsertRecord(_message,_date)  
+        {  
+            var pad = function(num) { return ('00'+num).slice(-2) };
+
+            var sender = "{{user.username}}"
+            var receiver = "{{users_2}}"
+            if ("{{users_2}}" == "{{user.username}}")   
+                receiver = "{{users_1}}"
+            var message = _message;  
+            var date = _date
+            var match = "{{match.pk}}"  
+            var value_to_return = sender+"|"+receiver+"|"+message+"|"+date+"|"+match
+            console.log(value_to_return)
+            return value_to_return
+        } 
+
+    </script>
+{% endblock %}

@@ -19,4 +19,6 @@ urlpatterns = [
     path('events/<pk>/', views.EventDetailView.as_view(), name='events-detail'),
     path('events/<pk>/update/', views.EventUpdateView.as_view(), name='events-update'),
     path('events/<pk>/delete/', views.EventDeleteView.as_view(), name='events-delete'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('chat/', views.chat_choose, name='chat'),
+    path('chat/<str:room_name>/', views.room, name='room'),
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

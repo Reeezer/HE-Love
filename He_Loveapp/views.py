@@ -250,16 +250,60 @@ class ChatDetailView(LoginRequiredMixin, generic.DetailView):
 
 class ChatCreateView(LoginRequiredMixin, generic.CreateView):
     model = Chat
-    fields = ['chat_user_sender', 'chat_user_receiver', 'message', 'date']
+    fields = ['chat_user_sender', 'chat_user_receiver','chat_match', 'message', 'date']
     success_url = reverse_lazy('chats-list')
 
 
 class ChatUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Chat
-    fields = ['chat_user_sender', 'chat_user_receiver', 'message', 'date']
+    fields = ['chat_user_sender', 'chat_user_receiver','chat_match', 'message', 'date']
     success_url = reverse_lazy('chats-list')
 
 
 class ChatDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Chat
     success_url = reverse_lazy('chats-list')
+    
+@login_required    
+def chat_choose(request):
+    return render(request, 'He_Loveapp/chat.html')
+
+@login_required
+def room(request, room_name):
+    ## splitting the room_name to get the two users username
+    users = room_name.split("m4t5hW1t3h")
+    
+    ## Checking if user_1 exists
+    try:
+        users_1 = AppUser.objects.get(username=users[0])
+    except:
+        users_1 = None
+
+    ## Checking if user_2 exists
+    try:
+        users_2 = AppUser.objects.get(username=users[1])
+    except:
+        users_2 = None    
+    
+    # A user can only go in a room matching :
+    if str(request.user) == str(users_1) or str(request.user) == str(users_2) :
+        try:
+            match = Match.objects.get((Q(user_1 = users_1) & Q(user_2 = users_2))  | (Q(user_1 = users_2) & Q(user_2 = users_1)))
+        except:
+            match = None
+            
+        if match != None:
+
+            chats = Chat.objects.filter(Q(match = match))
+
+            return render(request, 'He_Loveapp/room.html', {
+                'room_name': room_name,
+                'users_1' : users_1,
+                'users_2' : users_2,
+                'chats' : chats,
+                'match' : match
+            })
+        else:
+            return render(request, 'He_Loveapp/index.html')    
+    else :  
+        return render(request, 'He_Loveapp/index.html')
