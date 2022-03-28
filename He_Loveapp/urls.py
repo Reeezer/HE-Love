@@ -22,3 +22,4 @@ urlpatterns = [
     path('chat/', views.chat_choose, name='chat'),
     path('chat/<str:room_name>/', views.room, name='room'),
     static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
