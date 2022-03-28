@@ -236,26 +236,37 @@ def room(request, room_name):
     ## splitting the room_name to get the two users username
     users = room_name.split("m4t5hW1t3h")
     
-    users_1 = AppUser.objects.get(username=users[0])
-    f = open("log.txt","w")
-    f.write(f"\nrequest.user : {request.user}\n")
-    f.write(f"\nuser_1 : {users_1}\n")
-    users_2 = AppUser.objects.get(username=users[1])
-    f.write(f"user_2 : {users_2}\n")
+    ## Checking if user_1 exists
+    try:
+        users_1 = AppUser.objects.get(username=users[0])
+    except:
+        users_1 = None
+
+    ## Checking if user_2 exists
+    try:
+        users_2 = AppUser.objects.get(username=users[1])
+    except:
+        users_2 = None    
     
     # A user can only go in a room matching :
     if str(request.user) == str(users_1) or str(request.user) == str(users_2) :
-        match = Match.objects.get((Q(user_1 = users_1) & Q(user_2 = users_2))  | (Q(user_1 = users_2) & Q(user_2 = users_1)))
-        f.write(f"matches : {match}\n")
-        chats = Chat.objects.filter(Q(match = match))
-        f.write(f"chat : {chats}\n")
-        f.close()
-        return render(request, 'He_Loveapp/room.html', {
-            'room_name': room_name,
-            'users_1' : users_1,
-            'users_2' : users_2,
-            'chats' : chats,
-            'match' : match
-        })
+        try:
+            match = Match.objects.get((Q(user_1 = users_1) & Q(user_2 = users_2))  | (Q(user_1 = users_2) & Q(user_2 = users_1)))
+        except:
+            match = None
+            
+        if match != None:
+
+            chats = Chat.objects.filter(Q(match = match))
+
+            return render(request, 'He_Loveapp/room.html', {
+                'room_name': room_name,
+                'users_1' : users_1,
+                'users_2' : users_2,
+                'chats' : chats,
+                'match' : match
+            })
+        else:
+            return render(request, 'He_Loveapp/index.html')    
     else :  
         return render(request, 'He_Loveapp/index.html')

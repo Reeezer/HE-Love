@@ -1,7 +1,10 @@
-
-request.user : user_1
-
-user_1 : user_1
-user_2 : user_2
-matches : Match object (1)
-chat : <QuerySet [<Chat: Chat object (1)>, <Chat: Chat object (2)>, <Chat: Chat object (3)>, <Chat: Chat object (4)>, <Chat: Chat object (5)>, <Chat: Chat object (6)>]>
+insertion 0 : user_1
+insertion 1 : user_3
+insertion 2 : ok ... :( 
+insertion 3 : 2022-03-28 08:41:10
+insertion 4 : 2
+get_sender : user_1
+get_receiver : user_1
+get_message : ok ... :( 
+get_date : 2022-03-28 08:41:10
+get_match : Match object (2)

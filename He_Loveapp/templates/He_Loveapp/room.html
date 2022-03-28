@@ -7,7 +7,7 @@
     <text>Match : {{match.pk}}</text><br>
 <textarea id="chat-log" cols="100" rows="20">
 {% for chat in chats %}
-{{chat.user_sender}} : {{chat.message}} ({{chat.date|date:'Y-m-d'}} {{chat.date|time:'H:i:s'}})
+{{chat.user_sender}} : {{chat.message}} ({{chat.date|date:'Y-m-d'}} {{chat.date|time:'H:i:s'}} [UTC/GTM+0])
 {% endfor %}
 </textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
@@ -26,7 +26,7 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.sender + ' : ' + data.message +' ('+(data.date_time) +')\n\n');
+            document.querySelector('#chat-log').value += (data.sender + ' : ' + data.message +' ('+(data.date_time) +') [UTC/GTM+0]\n\n');
         };
 
         chatSocket.onclose = function(e) {
