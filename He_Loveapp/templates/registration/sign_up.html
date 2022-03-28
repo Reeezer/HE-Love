@@ -1,14 +1,61 @@
 {% extends 'He_Loveapp/base.html' %} 
-{% block title %}S'enregistrer{% endblock %}
+{% block title %}
+	{% if appuser is None %}
+		S'enregistrer
+	{% else %}
+		Modifier profile
+	{% endif %}
+{% endblock %}
 {% block content %}
 
-<form method="post">
-	{% csrf_token %} 
-	{{form.as_p}}
-	<input type="submit" value="Sign up" />
-</form>
+{% if appuser is None %}
+<div>
+{% else %}
+<div class="register">
+{% endif %}
+	<form method="post">
+		{% csrf_token %} 
+		{{form.as_p}}
+		<input type="submit" value="Sign up" />
+	</form>
+</div>
 
 <script>
+	function checkAlreadyCheckedBox(interests, documentName){
+		interests = interests.slice(14, interests.length - 5);
+		interestsTab = interests.split(',');
+
+		for (let i = 0; i < interestsTab.length; i++){
+			let interestTab = interestsTab[i];
+			interestTab = interestTab.trim();
+			interestTab = interestTab.slice(0, interestTab.length-1);
+			
+			let name = interestTab.split(':')[1];
+			name = name.trim();
+			name = name.slice(6, name.length-6);
+			name = name.replace(/[\n\t\r]/g,"");
+			
+			let boxes = document.getElementsByName(documentName);
+			for (let j = 0; j < boxes.length; j++) {
+				let box = boxes[j];
+				let boxName = box.parentElement.textContent;
+				boxName = boxName.replace(/[\n\t\r]/g,"");
+				boxName = boxName.trim();
+				
+				if (boxName == name){
+					box.parentElement.parentElement.classList.add("selected");
+					box.checked = true;
+				} 
+			}
+		}
+	}
+
+	var user = '{{appuser}}';
+	if (user){
+		checkAlreadyCheckedBox('{{gender_interests}}', 'user_gender_interests');
+		checkAlreadyCheckedBox('{{interests}}', 'user_interests');
+	}
+
 	var nbInterests = 0;
 	var nbGenderInterests = 0;
 

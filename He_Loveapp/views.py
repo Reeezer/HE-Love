@@ -12,9 +12,11 @@ import datetime
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 
 from .models import *
 
+from django.core import serializers
 
 
 # Create your wiews here
@@ -34,6 +36,26 @@ def sign_up(request):
             login(request, user)
             return redirect('home')
     context['form'] = form
+    return render(request, 'registration/sign_up.html', context)
+
+@login_required
+def update_user(request, pk):
+    if int(request.user.id) != int(pk):
+        return redirect('users-detail', request.user.id)
+    
+    user = AppUser.objects.get(id=pk)
+    user_interests = User_interest.objects.filter(user=user).values('interest')
+    interests = Interest.objects.filter(id__in=user_interests).values('description')
+    
+    user_gender_interests = User_gender_interest.objects.filter(user=user).values('gender')
+    gender_interests = Gender.objects.filter(id__in=user_gender_interests).values('name')
+    
+    form = UpdateUserForm(request.POST or None, instance=user)
+    context = {'form': form, 'appuser':user, 'interests':interests, 'gender_interests':gender_interests}
+    if form.is_valid():
+        obj = form.save()
+        obj.save()
+        return redirect('users-detail', request.user.id)
     return render(request, 'registration/sign_up.html', context)
 
 def swipe(request_id, pk, is_like):
@@ -101,7 +123,7 @@ class UserListView(LoginRequiredMixin, generic.ListView):
         disliked_users = Dislike.objects.filter(Q(user=current_user))
         disliked_3days = [disliked_user.user_disliked.id for disliked_user in disliked_users if not disliked_user.is_valid_now()]
         
-        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('-rank')
+        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('rank')[:3]
 
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
@@ -136,10 +158,36 @@ class RegisterForm(UserCreationForm):
         return user
 
 
-class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = AppUser
-    fields = ['birth_date', 'gender', 'description']
-    success_url = reverse_lazy('users-list')
+class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
+    user_gender_interests = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Genres recherchés', widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
+    user_interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), label="Intérêts", widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
+
+    class Meta:
+        model = AppUser
+        fields = ['birth_date', 'gender', 'description']
+
+    def save(self, commit=True):
+        # it's not the right way to do this, but we're already too far in the project to change the database and add ManyToMany field in models
+        user = super(UpdateUserForm, self).save(commit=False)
+        if commit:
+            user.save()
+        gender_interests = self.cleaned_data['user_gender_interests']
+        user_interests = self.cleaned_data['user_interests']
+        
+        User_gender_interest.objects.filter(user=user).delete()
+        User_interest.objects.filter(user=user).delete()
+        
+        for gender_interest in gender_interests:
+            User_gender_interest.objects.create(user=user, gender=gender_interest)
+        i = 0
+        for interest in user_interests:
+            if i < 5: 
+                User_interest.objects.create(user=user, interest=interest)
+                i += 1
+        
+        if commit:
+            user.save()
+        return user
 
 
 class PictureListView(LoginRequiredMixin, generic.ListView):

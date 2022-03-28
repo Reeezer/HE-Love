@@ -267,6 +267,21 @@ header .icon {
 
 /* ----- Forms ------ */
 
+.register {
+	margin-bottom: 80px;
+}
+
+form {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+	gap: 8px;
+
+	margin-bottom: 8px;
+	border-radius: 8px;
+	padding: 8px;
+}
+
 .forms-box {
 	display: flex;
 	flex-flow: row wrap;
@@ -291,16 +306,6 @@ header .icon {
 .forms-box .selected {
 	background-color: var(--primary-color);
 	color: var(--white-color);
-}
-
-form {
-	display: flex;
-	flex-flow: column wrap;
-	align-items: center;
-	gap: 8px;
-	margin-bottom: 8px;
-	border-radius: 8px;
-	padding: 8px;
 }
 
 form p {
