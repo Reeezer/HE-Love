@@ -9,7 +9,9 @@
 		<div class="top">
 			<div class="username">{{ appuser.username }} {{ appuser.get_age }}</div>
 			{% if user.id == appuser.id %}
-				<a class="logout-button" href="/accounts/logout">Logout</a>
+				<a class="button minus-button" href="/accounts/logout">
+					{% load static %} <img class="minus-icon" src="{% static "src/vue/files/img/logout.png" %}" alt="logout"/>
+				</a>
 			{% endif %}
 		</div>
 	</div>
@@ -28,7 +30,7 @@
 		<div class="title">Intérêts</div>
 		<div class="interests">
 			{% for appuser_interest in appuser.get_interests %}
-				<div class="interest" style="font-size: 14px">{{ appuser_interest.interest.description }}</div>
+				<div class="interest" style="font-size: 12px">{{ appuser_interest.interest.description }}</div>
 			{% empty %}
 				<div class="interest">Aucune</div>
 			{% endfor %}
@@ -39,7 +41,7 @@
 		<div class="title">Genres recherchés</div>
 		<div class="interests">
 			{% for appuser_gender_interest in appuser.get_gender_interests %}
-				<div class="interest" style="font-size: 14px">{{ appuser_gender_interest.gender.name }}</div>
+				<div class="interest" style="font-size: 12px">{{ appuser_gender_interest.gender.name }}</div>
 			{% empty %}
 			<div class="interest">Aucun</div>
 			{% endfor %}
@@ -48,7 +50,7 @@
 
 	{% if user.id == appuser.id %}
 	<div class="profile-buttons">
-		<a class="profile-button" href="">Modifier</a>
+		<a class="profile-button" href="{% url 'users-update' user.id %}">Modifier</a>
 	</div>
 	{% endif %}
 </div>	

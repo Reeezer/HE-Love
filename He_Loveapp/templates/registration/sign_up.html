@@ -1,13 +1,100 @@
 {% extends 'He_Loveapp/base.html' %} 
-{% block title %}Se connecter{% endblock %}
+{% block title %}
+	{% if appuser is None %}
+		S'enregistrer
+	{% else %}
+		Modifier profile
+	{% endif %}
+{% endblock %}
 {% block content %}
 
-<form method="post">
-	{% csrf_token %} 
-	{{form.as_p}}
-	<input type="submit" value="Sign up" />
-</form>
+<div class="{% if appuser %}register{% endif %}">
+	<form method="post">
+		{% csrf_token %} 
+		{{form.as_p}}
+		<input type="submit" value="{% if appuser is None %}Enregistrer{% else %}Modifier{% endif %}" />
+	</form>
+</div>
 
-<a href="{% url 'sign-up' %}"></a>
+<script>
+	function checkAlreadyCheckedBox(interests, documentName, nbMax){
+		interests = interests.slice(1, interests.length-1);
+		interestsTab = interests.split(',');
+
+		for (let i = 0; i < interestsTab.length; i++){
+			let interestTab = interestsTab[i];
+			interestTab = interestTab.trim();
+			interestTab = interestTab.slice(0, interestTab.length-1);
+			
+			let name = interestTab.split(':')[1];
+			name = name.trim();
+			name = name.slice(6, name.length-6);
+			name = name.replace(/[\n\t\r]/g,"");
+			
+			let boxes = document.getElementsByName(documentName);
+			for (let j = 0; j < boxes.length; j++) {
+				let box = boxes[j];
+				let boxName = box.parentElement.textContent;
+				boxName = boxName.replace(/[\n\t\r]/g,"");
+				boxName = boxName.trim();
+				
+				if (boxName == name){
+					nbMax++;
+					box.parentElement.parentElement.classList.add("selected");
+					box.checked = true;
+				} 
+			}
+		}
+
+		return nbMax;
+	}
+
+	function changeColor(name, nbMax) {
+		var i = 0;
+		var checkbox = document.getElementById(name + i);
+		while (checkbox != null) {
+			// Change color on load
+			if (checkbox.checked){
+				checkbox.parentElement.parentElement.classList.add("selected");
+			}
+
+			// Change color event
+			checkbox.addEventListener('change', (event) => {
+				li = event.target.parentElement.parentElement;
+				if (event.currentTarget.checked) {
+					if (nbMax < 5){
+						li.classList.add("selected");
+						nbMax++;
+					}
+					else {
+						event.target.checked = false;
+					}
+				} 
+				else {
+					if (li.classList.contains("selected")){
+						li.classList.remove("selected");
+						nbMax--;
+					}
+				}
+			});
+			
+			i++;
+			var checkbox = document.getElementById(name + i);
+		}
+	}
+
+	var nbInterests = 0;
+	var nbGenderInterests = 0;
+
+	if ('{{appuser}}'){
+		nbGenderInterests = checkAlreadyCheckedBox('{{gender_interests}}', 'user_gender_interests', nbGenderInterests);
+		nbInterests = checkAlreadyCheckedBox('{{interests}}', 'user_interests', nbInterests);
+	}
+
+	changeColor("id_user_gender_interests_", nbGenderInterests);
+	changeColor("id_user_interests_", nbInterests);
+
+	document.getElementById("id_birth_date").type = "date";
+</script>
 
 {% endblock %}

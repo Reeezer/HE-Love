@@ -66,6 +66,11 @@ body {
 	border-radius: 8px;
 }
 
+.minus-button {
+	width: 36px;
+	height: 36px;
+}
+
 .icon {
 	width: 32px;
 	height: 32px;
@@ -80,6 +85,8 @@ body {
 	flex-flow: row wrap;
 	display: flex;
 	gap: 8px;
+
+	list-style-type: none;
 }
 
 .interest {
@@ -87,6 +94,11 @@ body {
 	padding: 4px 8px;
 	border-radius: 16px;
 	font-size: 12px;
+	color: var(--black-transparent-color);
+}
+
+.primary {
+	color: var(--primary-color);
 }
 
 /* ----- Title bar ----- */
@@ -134,9 +146,8 @@ header .icon {
 	background-color: var(--white-color);
 }
 
-.navbar .button {
-	background-color: var(--light-gray-transparent-color);
-	/* border: solid 2px var(--primary-color);  */
+.navbar .button, .profile .button {
+	border: solid 2px var(--primary-color); 
 }
 
 .navbar .selected-view {
@@ -190,9 +201,8 @@ header .icon {
 	background-color: var(--white-color);
 }
 
-.card .superlike {
-	width: 36px;
-	height: 36px;
+.card .interest {
+	color: var(--white-color);
 }
 
 /* ----- Profile ----- */
@@ -203,7 +213,7 @@ header .icon {
 	border-radius: 8px;
 	gap: 16px;
 
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 
 	padding: 8px;
 
@@ -245,6 +255,8 @@ header .icon {
 	flex-flow: row wrap;
 	display: flex;
 	justify-content: space-around;
+
+	padding-top: 16px;
 }
 
 .profile .profile-button {
@@ -254,8 +266,74 @@ header .icon {
 	padding: 4px 8px; 
 }
 
-.profile .logout-button {
+.profile .button {
 	border-radius: 4px;
-	padding: 4px 8px; 
-	border: solid 1px var(--black-color);
+}
+
+/* ----- Forms ------ */
+
+.register {
+	margin-bottom: 80px;
+}
+
+form {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+	gap: 8px;
+
+	margin-bottom: 8px;
+	border-radius: 8px;
+	padding: 8px;
+}
+
+.forms-box {
+	display: flex;
+	flex-flow: row wrap;
+	gap: 8px;
+}
+
+.forms-box li {
+	background-color: var(--gray-transparent-color);
+	padding: 4px 8px;
+	border-radius: 16px;
+}
+
+.forms-box li label {
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.forms-box li label [type=checkbox]{
+	display: none;
+} 
+
+.forms-box .selected {
+	background-color: var(--primary-color);
+	color: var(--white-color);
+}
+
+form p {
+	width: 100%;
+	display: flex;
+	flex-flow: column wrap;
+	gap: 2px;
+}
+
+.helptext, form ul li {
+	font-size: 14px;
+	color: var(--black-transparent-color);
+}
+
+form input[type="submit"] {
+	border-radius: 8px;
+	background-color: var(--primary-color);
+	color: var(--white-color);
+	cursor: pointer;
+	padding: 4px 8px;
+	width: 96px;
+}
+
+textarea {
+	height: 128px;
 }
