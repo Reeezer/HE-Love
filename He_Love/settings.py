@@ -20,9 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# We know we shoudn't push that, it's not the same key for production ;)
 SECRET_KEY = 'django-insecure-6@6^u=oeh!p^o8j@li7fsx566b7o_+zd6xisj*1uspgw#jxw7k'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# FIXME : Set to False on last deploy
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -130,9 +131,13 @@ STATIC_URL = 'static/'
 STATIC_ROOT = 'static_root/'
 STATICFILES_DIRS = ['static']
 
+MEDIA_ROOT = 'media_root/'
+MEDIA_URL  = 'media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'

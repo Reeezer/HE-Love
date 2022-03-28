@@ -1,9 +1,12 @@
 from django.urls import path
 
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.index, name='home'),
+    path('temp/', views.tempTestView, name='temp'),
     path('accounts/sign_up/', views.sign_up, name='sign-up'),
     path('users/', views.UserListView.as_view(), name='users-list'),
     path('users/<pk>/', views.UserDetailView.as_view(), name='users-detail'),
@@ -18,4 +21,4 @@ urlpatterns = [
     path('events/<pk>/delete/', views.EventDeleteView.as_view(), name='events-delete'),
     path('chat/', views.chat_choose, name='chat'),
     path('chat/<str:room_name>/', views.room, name='room'),
-]
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
