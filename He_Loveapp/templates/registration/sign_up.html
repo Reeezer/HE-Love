@@ -8,21 +8,17 @@
 {% endblock %}
 {% block content %}
 
-{% if appuser is None %}
-<div>
-{% else %}
-<div class="register">
-{% endif %}
+<div class="{% if appuser %}register{% endif %}">
 	<form method="post">
 		{% csrf_token %} 
 		{{form.as_p}}
-		<input type="submit" value="Sign up" />
+		<input type="submit" value="{% if appuser is None %}Enregistrer{% else %}Modifier{% endif %}" />
 	</form>
 </div>
 
 <script>
-	function checkAlreadyCheckedBox(interests, documentName){
-		interests = interests.slice(14, interests.length - 5);
+	function checkAlreadyCheckedBox(interests, documentName, nbMax){
+		interests = interests.slice(1, interests.length-1);
 		interestsTab = interests.split(',');
 
 		for (let i = 0; i < interestsTab.length; i++){
@@ -43,21 +39,15 @@
 				boxName = boxName.trim();
 				
 				if (boxName == name){
+					nbMax++;
 					box.parentElement.parentElement.classList.add("selected");
 					box.checked = true;
 				} 
 			}
 		}
-	}
 
-	var user = '{{appuser}}';
-	if (user){
-		checkAlreadyCheckedBox('{{gender_interests}}', 'user_gender_interests');
-		checkAlreadyCheckedBox('{{interests}}', 'user_interests');
+		return nbMax;
 	}
-
-	var nbInterests = 0;
-	var nbGenderInterests = 0;
 
 	function changeColor(name, nbMax) {
 		var i = 0;
@@ -91,6 +81,14 @@
 			i++;
 			var checkbox = document.getElementById(name + i);
 		}
+	}
+
+	var nbInterests = 0;
+	var nbGenderInterests = 0;
+
+	if ('{{appuser}}'){
+		nbGenderInterests = checkAlreadyCheckedBox('{{gender_interests}}', 'user_gender_interests', nbGenderInterests);
+		nbInterests = checkAlreadyCheckedBox('{{interests}}', 'user_interests', nbInterests);
 	}
 
 	changeColor("id_user_gender_interests_", nbGenderInterests);

@@ -30,7 +30,7 @@
 		<div class="title">Intérêts</div>
 		<div class="interests">
 			{% for appuser_interest in appuser.get_interests %}
-				<div class="interest" style="font-size: 14px">{{ appuser_interest.interest.description }}</div>
+				<div class="interest" style="font-size: 12px">{{ appuser_interest.interest.description }}</div>
 			{% empty %}
 				<div class="interest">Aucune</div>
 			{% endfor %}
@@ -41,7 +41,7 @@
 		<div class="title">Genres recherchés</div>
 		<div class="interests">
 			{% for appuser_gender_interest in appuser.get_gender_interests %}
-				<div class="interest" style="font-size: 14px">{{ appuser_gender_interest.gender.name }}</div>
+				<div class="interest" style="font-size: 12px">{{ appuser_gender_interest.gender.name }}</div>
 			{% empty %}
 			<div class="interest">Aucun</div>
 			{% endfor %}

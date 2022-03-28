@@ -7,7 +7,7 @@
 {% for appuser in object_list %}
 	<div class="card">
 		<div class="informations">
-			<div class="username"><strong class="username">{{ appuser.username }}</strong> {{ appuser.get_age }} {{ appuser.rank }}</div>
+			<div class="username"><strong class="username">{{ appuser.username }}</strong> {{ appuser.get_age }}</div>
 			<div class="interests">
 				{% for appuser_interest in appuser.get_interests %}
 					<div class="interest">{{ appuser_interest.interest.description }}</div>

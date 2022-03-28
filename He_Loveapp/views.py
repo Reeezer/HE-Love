@@ -51,7 +51,7 @@ def update_user(request, pk):
     gender_interests = Gender.objects.filter(id__in=user_gender_interests).values('name')
     
     form = UpdateUserForm(request.POST or None, instance=user)
-    context = {'form': form, 'appuser':user, 'interests':interests, 'gender_interests':gender_interests}
+    context = {'form': form, 'appuser':user, 'interests':list(interests), 'gender_interests':list(gender_interests)}
     if form.is_valid():
         obj = form.save()
         obj.save()
