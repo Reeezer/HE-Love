@@ -54,6 +54,10 @@ class AppUser(User):
     def rank_up(self, amount):
         self.rank += amount
         self.save()
+        
+    def get_pictures(self): # Includes PP
+        return self.profilePicture + Picture.objects.filter(user=self)
+    
 
 
 class Picture(models.Model):
@@ -63,11 +67,14 @@ class Picture(models.Model):
     class Meta:
         verbose_name_plural="Pictures"
 
+def event_upload(instance,filename):
+    return f'eventimages/event_{instance.id}/eventPP.{filename.split(".")[-1]}'
         
 class Event(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField()
     description = models.TextField()
+    image = models.ImageField(upload_to=event_upload)
     
     class Meta:
         verbose_name_plural="Events"
