@@ -145,6 +145,11 @@ class Match(models.Model):
         self.date = datetime.datetime.now()
         self.last_message_date = datetime.datetime.now()
         
+    def updaterecord_last_message_date(id, message_date):
+        update_match = Match.objects.get(id=id)
+        update_match.last_message_date = message_date
+        update_match.save()
+        
         
 class Chat(models.Model):
     user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
