@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
@@ -55,6 +54,10 @@ class AppUser(User):
     def rank_up(self, amount):
         self.rank += amount
         self.save()
+        
+    def get_pictures(self): # Includes PP
+        return self.profilePicture + Picture.objects.filter(user=self)
+    
 
 
 class Picture(models.Model):
@@ -64,11 +67,14 @@ class Picture(models.Model):
     class Meta:
         verbose_name_plural="Pictures"
 
+def event_upload(instance,filename):
+    return f'eventimages/event_{instance.id}/eventPP.{filename.split(".")[-1]}'
         
 class Event(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField()
     description = models.TextField()
+    image = models.ImageField(upload_to=event_upload)
     
     class Meta:
         verbose_name_plural="Events"
@@ -145,11 +151,16 @@ class Match(models.Model):
         self.date = datetime.datetime.now()
         self.last_message_date = datetime.datetime.now()
         
+    def updaterecord_last_message_date(id, message_date):
+        update_match = Match.objects.get(id=id)
+        update_match.last_message_date = message_date
+        update_match.save()
+        
         
 class Chat(models.Model):
     user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
     user_receiver = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_receiver')
-    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match',default=NULL)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match')
     message = models.TextField()
     date = models.DateTimeField(default=datetime.datetime.now)
     

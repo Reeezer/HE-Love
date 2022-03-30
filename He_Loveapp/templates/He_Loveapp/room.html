@@ -46,15 +46,20 @@
         window.scrollTo(0, document.body.scrollHeight);
     });
 
-    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+   const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
-    const chatSocket = new WebSocket(
-        'ws://'
-        + window.location.host
-        + '/ws/chat/'
-        + roomName
-        + '/'
-    );
+      var wsStart = 'ws://';
+          if (window.location.protocol == 'https:') {
+              wsStart = 'wss://'
+          }
+
+      const chatSocket = new WebSocket(
+          wsStart
+          + window.location.host
+          + '/ws/chat/'
+          + roomName
+          + '/'
+      );
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
@@ -98,56 +103,58 @@
     };
 
     chatSocket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
-    };
+            console.error('Chat socket closed unexpectedly\n'+e);
+        };
 
-    document.querySelector('#chat-message-input').focus();
-    document.querySelector('#chat-message-input').onkeyup = function(e) {
-        if (e.keyCode === 13) {  // enter, return
-            document.querySelector('#chat-message-submit').click();
-        }
-    };
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
 
-    document.querySelector('#chat-message-submit').onclick = function(e) {
-        var pad = function(num) { return ('00'+num).slice(-2) };
-        var date;
-        date = new Date();
-        date = date.getUTCFullYear()         + '-' +
-                pad(date.getUTCMonth() + 1)  + '-' +
-                pad(date.getUTCDate())       + ' ' +
-                pad(date.getUTCHours())      + ':' +
-                pad(date.getUTCMinutes())    + ':' +
-                pad(date.getUTCSeconds());
+        document.querySelector('#chat-message-submit').onclick = function(e) {
 
-        const messageInputDom = document.querySelector('#chat-message-input');
-        const sender = "{{user.username}}";
-        const message = messageInputDom.value;
-        const date_time = date
-        const insertion = InsertRecord(message,date);
-        
-        chatSocket.send(JSON.stringify({
-            'sender': sender,
-            'message': message,
-            'date_time' : date_time,
-            'insertion' : insertion
-        }));
-        messageInputDom.value = '';
-    };
+            var pad = function(num) { return ('00'+num).slice(-2) };
+            var date;
+            date = new Date();
+            date = date.getUTCFullYear()         + '-' +
+                    pad(date.getUTCMonth() + 1)  + '-' +
+                    pad(date.getUTCDate())       + ' ' +
+                    pad(date.getUTCHours())      + ':' +
+                    pad(date.getUTCMinutes())    + ':' +
+                    pad(date.getUTCSeconds());
 
-    function InsertRecord(_message,_date)  
-    {  
-        var pad = function(num) { return ('00'+num).slice(-2) };
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const sender = "{{user.username}}";
+            const message = messageInputDom.value;
+            const date_time = date
+            const insertion = InsertRecord(message,date);
+            
+            chatSocket.send(JSON.stringify({
+                'sender': sender,
+                'message': message,
+                'date_time' : date_time,
+                'insertion' : insertion
+            }));
+            messageInputDom.value = '';
+        };
 
-        var sender = "{{user.username}}"
-        var receiver = "{{users_2}}"
-        if ("{{users_2}}" == "{{user.username}}")   
-            receiver = "{{users_1}}"
-        var message = _message;  
-        var date = _date
-        var match = "{{match.pk}}"  
-        var value_to_return = sender+"|"+receiver+"|"+message+"|"+date+"|"+match
-        console.log(value_to_return)
-        return value_to_return
-    } 
+        function InsertRecord(_message,_date)  
+        {  
+            var pad = function(num) { return ('00'+num).slice(-2) };
+
+            var sender = "{{user.username}}"
+            var receiver = "{{users_2}}"
+            if ("{{users_2}}" == "{{user.username}}")   
+                receiver = "{{users_1}}"
+            var message = _message;  
+            var date = _date
+            var match = "{{match.pk}}"  
+            var value_to_return = sender+"|"+receiver+"|"+message+"|"+date+"|"+match
+            console.log(value_to_return)
+            return value_to_return
+        } 
 </script>
+
 {% endblock %}

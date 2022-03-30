@@ -210,34 +210,6 @@ class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
         return user
 
 
-class PictureListView(LoginRequiredMixin, generic.ListView):
-    model = Picture
-    
-    def get_queryset(self):
-        #current_user = AppUser.objects.get(id=self.kwargs["pk"])
-        return Picture.objects.filter(user=self.kwargs["pk"])
-
-
-class PictureDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Picture
-
-
-class PictureCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Picture
-    fields = ['picture_user', 'file']
-    success_url = reverse_lazy('pictures-list')
-
-
-class PictureUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Picture
-    fields = ['picture_user', 'file']
-    success_url = reverse_lazy('pictures-list')
-
-
-class PictureDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Picture
-    success_url = reverse_lazy('pictures-list')
-
 
 class EventListView(LoginRequiredMixin, generic.ListView):
     model = Event
@@ -252,7 +224,7 @@ class EventDetailView(LoginRequiredMixin, generic.DetailView):
 
 class EventCreateView(LoginRequiredMixin, generic.CreateView):
     model = Event
-    fields = ['title', 'date', 'description']
+    fields = ['title', 'date',  'description','image']
     success_url = reverse_lazy('events-list')
 
 
