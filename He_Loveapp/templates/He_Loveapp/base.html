@@ -41,12 +41,12 @@
           </a>
         {% endif %}
 
-        {% if view_name == 'chats-list' %}
-          <a class="button selected-view" href="">
+        {% if view_name == 'chat' %}
+          <a class="button selected-view" href="{% url 'chat' %}">
             {% load static %} <img class="icon" src="{% static "src/vue/files/img/chat-white.png" %}" alt="chat"/>
           </a>
         {% else %}
-          <a class="button" href="">
+          <a class="button" href="{% url 'chat' %}">
             {% load static %} <img class="icon" src="{% static "src/vue/files/img/chat.png" %}" alt="chat"/>
           </a>
         {% endif %}

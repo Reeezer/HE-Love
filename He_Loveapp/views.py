@@ -97,8 +97,8 @@ def swipe(request_id, pk, is_like):
             Dislike.objects.create(user=user_1, user_disliked=user_2)
 
     # if the match already exists (the other user has already liked or disliked you), only modify it
-    if Match.objects.filter((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2))).exists():
-        match = Match.objects.get((Q(user_1=user_1.id) | Q(user_2=user_1.id)) & (Q(user_1=user_2) | Q(user_2=user_2)))
+    if Match.objects.filter((Q(user_1=user_1.id) & Q(user_2=user_2.id)) | (Q(user_1=user_2.id) & Q(user_2=user_1.id))).exists():
+        match = Match.objects.get((Q(user_1=user_1.id) & Q(user_2=user_2.id)) | (Q(user_1=user_2.id) & Q(user_2=user_1.id)))
         match.swipe(user_1, is_like)
         match.save()
         # TODO maybe set the pair user_1, user_2 as unique in this table
@@ -271,28 +271,7 @@ class MatchListView(LoginRequiredMixin, generic.ListView):
     model = Match
 
     def get_queryset(self):
-        return Match.objects.all()
-
-
-class MatchDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Match
-
-
-class MatchCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Match
-    fields = ['match_user_1', 'match_user_2', 'vote_user_1', 'vote_user_2', 'date', 'last_message_date']
-    success_url = reverse_lazy('matchs-list')
-
-
-class MatchUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Match
-    fields = ['match_user_1', 'match_user_2', 'vote_user_1', 'vote_user_2', 'date', 'last_message_date']
-    success_url = reverse_lazy('matchs-list')
-
-
-class MatchDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Match
-    success_url = reverse_lazy('matchs-list')
+        return Match.objects.filter((Q(user_1=self.request.user.id) | Q(user_2=self.request.user.id)) & Q(vote_user_1=True) & Q(vote_user_2=True)).order_by('-last_message_date')
 
 
 class ChatListView(LoginRequiredMixin, generic.ListView):
@@ -301,31 +280,6 @@ class ChatListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Chat.objects.all()
 
-
-class ChatDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Chat
-
-
-class ChatCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Chat
-    fields = ['chat_user_sender', 'chat_user_receiver','chat_match', 'message', 'date']
-    success_url = reverse_lazy('chats-list')
-
-
-class ChatUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Chat
-    fields = ['chat_user_sender', 'chat_user_receiver','chat_match', 'message', 'date']
-    success_url = reverse_lazy('chats-list')
-
-
-class ChatDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Chat
-    success_url = reverse_lazy('chats-list')
-    
-@login_required    
-def chat_choose(request):
-    return render(request, 'He_Loveapp/chat.html')
-
 @login_required
 def room(request, room_name):
     ## splitting the room_name to get the two users username
@@ -333,35 +287,34 @@ def room(request, room_name):
     
     ## Checking if user_1 exists
     try:
-        users_1 = AppUser.objects.get(username=users[0])
+        user_1 = AppUser.objects.get(username=users[0])
     except:
-        users_1 = None
-
+        user_1 = None
+        
     ## Checking if user_2 exists
     try:
-        users_2 = AppUser.objects.get(username=users[1])
+        user_2 = AppUser.objects.get(username=users[1])
     except:
-        users_2 = None    
+        user_2 = None    
     
     # A user can only go in a room matching :
-    if str(request.user) == str(users_1) or str(request.user) == str(users_2) :
+    if str(request.user) == str(user_1) or str(request.user) == str(user_2):
         try:
-            match = Match.objects.get((Q(user_1 = users_1) & Q(user_2 = users_2))  | (Q(user_1 = users_2) & Q(user_2 = users_1)))
+            match = Match.objects.get((Q(user_1=user_1.id) & Q(user_2=user_2.id)) | (Q(user_1=user_2.id) & Q(user_2=user_1.id)))
         except:
             match = None
             
         if match != None:
-
             chats = Chat.objects.filter(Q(match = match))
 
             return render(request, 'He_Loveapp/room.html', {
                 'room_name': room_name,
-                'users_1' : users_1,
-                'users_2' : users_2,
+                'users_1' : user_1,
+                'users_2' : user_2,
                 'chats' : chats,
                 'match' : match
             })
         else:
-            return render(request, 'He_Loveapp/index.html')    
+            return redirect('chat')
     else :  
-        return render(request, 'He_Loveapp/index.html')
+        return redirect('chat')
