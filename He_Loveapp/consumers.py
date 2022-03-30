@@ -34,9 +34,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         insertion = text_data_json['insertion']
         
         ##Insert in DB HERE
-        t = threading.Thread(target=database_chat_insertion,args=[insertion])
-        t.setDaemon(True)
-        t.start()
+        values = insertion.split('|')
+        if len(values[2].strip()) != 0:
+            t = threading.Thread(target=database_chat_insertion,args=[insertion])
+            t.setDaemon(True)
+            t.start()
 
         # Send message to room group
         await self.channel_layer.group_send(
