@@ -277,7 +277,7 @@ header .icon {
 /* ----- Forms ------ */
 
 .register {
-	margin-bottom: 80px;
+	margin-bottom: 92px;
 }
 
 form {
@@ -340,4 +340,161 @@ form input[type="submit"] {
 
 textarea {
 	height: 128px;
+}
+
+/* ----- Match list ----- */
+
+.matches {
+	flex-flow: column nowrap;
+	display: flex;
+	gap: 8px;
+
+	flex: 0 1 auto;
+
+	margin-bottom: 92px;
+}
+
+.matches .match {
+	flex-flow: row nowrap;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+
+	padding: 8px;
+	border-radius: 8px;
+
+	background-color: var(--white-color);
+}
+ 
+.matches .profile-picture {
+	border-radius: 100px;
+
+	background-color: var(--blue-color);
+
+	width: 64px;
+	height: 64px;
+}
+
+.matches .profile-infos {
+	flex-flow: column nowrap;
+	display: flex;
+	gap: 4px;
+
+	overflow: hidden;
+}
+
+.matches .username {
+	font-size: 20px;
+}
+
+.matches .last-message {
+	color: var(--black-transparent-color);
+	font-size: 14px;
+	height: 18px;
+	max-width: 200;
+}
+
+/* ----- Chat ----- */
+
+.chat {
+	display: flex;
+	flex-flow: column wrap;
+	gap: 16px;
+
+	margin-bottom: 92px;
+	border-radius: 8px;
+	padding: 8px;
+
+	background-color: var(--white-color);
+}
+
+.chat .user {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: center;
+
+	padding-bottom: 8px;
+
+	font-size: 18px;
+	border-bottom: 1px solid var(--light-gray-color);
+}
+
+.chat .messages {
+	display: flex;
+	flex-flow: column wrap;
+}
+
+.chat .messagebox {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.chat .message-content {
+	display: flex;
+	flex-flow: column wrap;
+
+	word-break: break-word;
+
+	max-width: 60vw;
+}
+
+.chat .mine-msg {
+	justify-content: flex-end;
+}
+
+.chat .other-msg {
+	justify-content: flex-start;
+}
+
+.chat .mine-msg .message {
+	background-color: var(--primary-color);
+	border-radius: 8px 2px 2px 8px;
+}
+
+.chat .other-msg .message {
+	background-color: var(--gray-color);
+	border-radius: 2px 8px 8px 2px;
+}
+
+.chat .other-content {
+	align-items: flex-start;
+}
+
+.chat .mine-content {
+	align-items: flex-end;
+}
+
+.chat .message {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: flex-start;
+
+	color: var(--white-color);
+	padding: 8px;
+}
+
+.chat .datetime {
+	color: var(--black-transparent-color);
+	font-size: 10px;
+}
+
+.chat .input {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+
+	gap: 8px;
+}
+
+.chat #chat-message-input {
+	width: 100%;
+}
+
+.chat #chat-message-submit {
+	border-radius: 8px;
+	background-color: var(--light-gray-color);
+	cursor: pointer;
+	padding: 4px 8px;
+	width: 96px;
 }

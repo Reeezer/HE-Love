@@ -136,6 +136,12 @@ class Match(models.Model):
             self.user_1.rank_up(5)
             self.user_2.rank_up(5)
             Chat.objects.create(user_sender=user, user_receiver=self.get_opposite_user(user), message="Entered in a new chat")
+            
+    def get_last_message(self):
+        return Chat.objects.filter(match=self.id).order_by('-date').first()
+    
+    def get_match_url(self):
+        return f"{self.user_1}m4t5hW1t3h{self.user_2}"
         
     @classmethod
     def create(self, user_1, user_2, vote_user_1):
