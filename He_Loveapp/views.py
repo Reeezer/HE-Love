@@ -230,7 +230,7 @@ class EventCreateView(LoginRequiredMixin, generic.CreateView):
 
 class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Event
-    fields = ['title', 'date', 'description']
+    fields = ['title', 'date', 'description','image']
     success_url = reverse_lazy('events-list')
 
 
