@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
@@ -31,7 +32,7 @@ class AppUser(User):
     
     birth_date = models.DateField(blank=False, default=datetime.datetime.now)
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
-    description = models.TextField(blank=False, default="Hello !")
+    description = models.TextField(blank=False, default="Hello !", max_length=300)
     rank = models.IntegerField(default=0)
     profilePicture = models.ImageField(upload_to=user_Image_Files_directory_path)
     
@@ -111,9 +112,6 @@ class Match(models.Model):
        
         else:
             return False, "Waiting for match"
-        
-    def get_last_message_date(self):
-        return self.last_message_date
     
     def get_opposite_user(self, user):
         if user == self.user_1:
@@ -152,8 +150,9 @@ class Match(models.Model):
 class Chat(models.Model):
     user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
     user_receiver = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_receiver')
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match',default=NULL)
     message = models.TextField()
-    date = models.DateField(default=datetime.datetime.now)
+    date = models.DateTimeField(default=datetime.datetime.now)
     
     class Meta:
         verbose_name_plural="Chats"

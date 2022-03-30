@@ -13,9 +13,11 @@ import datetime
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 
 from .models import *
 
+from django.core import serializers
 
 
 # Create your wiews here
@@ -23,7 +25,7 @@ from .models import *
 
 @login_required
 def index(request):
-    return render(request, 'He_Loveapp/index.html')
+    return redirect('users-list')
 
 from .forms import ImageForm
 def tempTestView(request):
@@ -56,6 +58,26 @@ def sign_up(request):
     context['form'] = form
     return render(request, 'registration/sign_up.html', context)
 
+@login_required
+def update_user(request, pk):
+    if int(request.user.id) != int(pk):
+        return redirect('users-detail', request.user.id)
+    
+    user = AppUser.objects.get(id=pk)
+    user_interests = User_interest.objects.filter(user=user).values('interest')
+    interests = Interest.objects.filter(id__in=user_interests).values('description')
+    
+    user_gender_interests = User_gender_interest.objects.filter(user=user).values('gender')
+    gender_interests = Gender.objects.filter(id__in=user_gender_interests).values('name')
+    
+    form = UpdateUserForm(request.POST or None, instance=user)
+    context = {'form': form, 'appuser':user, 'interests':list(interests), 'gender_interests':list(gender_interests)}
+    if form.is_valid():
+        obj = form.save()
+        obj.save()
+        return redirect('users-detail', request.user.id)
+    return render(request, 'registration/sign_up.html', context)
+
 def swipe(request_id, pk, is_like):
     user_2 = AppUser.objects.get(id=pk)
     user_1 = AppUser.objects.get(id=request_id)
@@ -69,6 +91,7 @@ def swipe(request_id, pk, is_like):
             dislike = Dislike.objects.get(Q(user=user_1) & Q(user_disliked=user_2))
             dislike.refresh()
             dislike.save()
+            # TODO maybe set the pair user_1, user_2 as unique in this table
         # if the dislike doesn't exists, let's create it
         else:
             Dislike.objects.create(user=user_1, user_disliked=user_2)
@@ -120,7 +143,7 @@ class UserListView(LoginRequiredMixin, generic.ListView):
         disliked_users = Dislike.objects.filter(Q(user=current_user))
         disliked_3days = [disliked_user.user_disliked.id for disliked_user in disliked_users if not disliked_user.is_valid_now()]
         
-        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('-rank')
+        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('rank')[:3]
 
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
@@ -128,9 +151,8 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class RegisterForm(UserCreationForm):
-    birth_date = forms.DateField(initial=datetime.date.today, label='Birth date')
-    #description = forms.CharField(widget=forms.Textarea, label='Description')
-    #gender = forms.MultipleChoiceField(widget=forms.RadioSelect, choices=Gender.values(), label='Gender')
+    user_gender_interests = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Genres recherchés', widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
+    user_interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), label="Intérêts", widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
 
     class Meta:
         model = AppUser
@@ -138,18 +160,54 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
-        user.birth_date = self.cleaned_data['birth_date']
-        user.gender = self.cleaned_data['gender']
-        user.description = self.cleaned_data['description']
+        if commit:
+            user.save()
+        gender_interests = self.cleaned_data['user_gender_interests']
+        user_interests = self.cleaned_data['user_interests']
+        
+        for gender_interest in gender_interests:
+            User_gender_interest.objects.create(user=user, gender=gender_interest)
+        i = 0
+        for interest in user_interests:
+            if i < 5: 
+                User_interest.objects.create(user=user, interest=interest)
+                i += 1
+        
         if commit:
             user.save()
         return user
 
 
-class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = AppUser
-    fields = ['username', 'birth_date', 'gender', 'description']
-    success_url = reverse_lazy('users-list')
+class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
+    user_gender_interests = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Genres recherchés', widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
+    user_interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), label="Intérêts", widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
+
+    class Meta:
+        model = AppUser
+        fields = ['birth_date', 'gender', 'description']
+
+    def save(self, commit=True):
+        # it's not the right way to do this, but we're already too far in the project to change the database and add ManyToMany field in models
+        user = super(UpdateUserForm, self).save(commit=False)
+        if commit:
+            user.save()
+        gender_interests = self.cleaned_data['user_gender_interests']
+        user_interests = self.cleaned_data['user_interests']
+        
+        User_gender_interest.objects.filter(user=user).delete()
+        User_interest.objects.filter(user=user).delete()
+        
+        for gender_interest in gender_interests:
+            User_gender_interest.objects.create(user=user, gender=gender_interest)
+        i = 0
+        for interest in user_interests:
+            if i < 5: 
+                User_interest.objects.create(user=user, interest=interest)
+                i += 1
+        
+        if commit:
+            user.save()
+        return user
 
 
 
@@ -222,16 +280,60 @@ class ChatDetailView(LoginRequiredMixin, generic.DetailView):
 
 class ChatCreateView(LoginRequiredMixin, generic.CreateView):
     model = Chat
-    fields = ['chat_user_sender', 'chat_user_receiver', 'message', 'date']
+    fields = ['chat_user_sender', 'chat_user_receiver','chat_match', 'message', 'date']
     success_url = reverse_lazy('chats-list')
 
 
 class ChatUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Chat
-    fields = ['chat_user_sender', 'chat_user_receiver', 'message', 'date']
+    fields = ['chat_user_sender', 'chat_user_receiver','chat_match', 'message', 'date']
     success_url = reverse_lazy('chats-list')
 
 
 class ChatDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Chat
     success_url = reverse_lazy('chats-list')
+    
+@login_required    
+def chat_choose(request):
+    return render(request, 'He_Loveapp/chat.html')
+
+@login_required
+def room(request, room_name):
+    ## splitting the room_name to get the two users username
+    users = room_name.split("m4t5hW1t3h")
+    
+    ## Checking if user_1 exists
+    try:
+        users_1 = AppUser.objects.get(username=users[0])
+    except:
+        users_1 = None
+
+    ## Checking if user_2 exists
+    try:
+        users_2 = AppUser.objects.get(username=users[1])
+    except:
+        users_2 = None    
+    
+    # A user can only go in a room matching :
+    if str(request.user) == str(users_1) or str(request.user) == str(users_2) :
+        try:
+            match = Match.objects.get((Q(user_1 = users_1) & Q(user_2 = users_2))  | (Q(user_1 = users_2) & Q(user_2 = users_1)))
+        except:
+            match = None
+            
+        if match != None:
+
+            chats = Chat.objects.filter(Q(match = match))
+
+            return render(request, 'He_Loveapp/room.html', {
+                'room_name': room_name,
+                'users_1' : users_1,
+                'users_2' : users_2,
+                'chats' : chats,
+                'match' : match
+            })
+        else:
+            return render(request, 'He_Loveapp/index.html')    
+    else :  
+        return render(request, 'He_Loveapp/index.html')
