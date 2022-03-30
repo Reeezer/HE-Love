@@ -28,12 +28,11 @@ def user_Image_Files_directory_path(instance,filename):
 
 
 class AppUser(User):
-    
     birth_date = models.DateField(blank=False, default=datetime.datetime.now)
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
     description = models.TextField(blank=False, default="Hello !", max_length=300)
     rank = models.IntegerField(default=0)
-    profilePicture = models.ImageField(upload_to=user_Image_Files_directory_path)
+    profile_picture = models.ImageField(upload_to=user_Image_Files_directory_path)
     
     def __str__(self):
         return self.username
@@ -56,7 +55,7 @@ class AppUser(User):
         self.save()
         
     def get_pictures(self): # Includes PP
-        return self.profilePicture + Picture.objects.filter(user=self)
+        return Picture.objects.filter(user=self.id).first()
     
 
 
