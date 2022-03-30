@@ -73,7 +73,7 @@ def event_upload(instance,filename):
         
 class Event(models.Model):
     title = models.CharField(max_length=200)
-    date = models.DateField()
+    date = models.DateTimeField()
     description = models.TextField()
     image = models.ImageField(upload_to=event_upload)
     
