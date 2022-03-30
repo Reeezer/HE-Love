@@ -43,7 +43,7 @@
 			{% for appuser_gender_interest in appuser.get_gender_interests %}
 				<div class="interest" style="font-size: 12px">{{ appuser_gender_interest.gender.name }}</div>
 			{% empty %}
-			<div class="interest">Aucun</div>
+				<div class="interest">Aucun</div>
 			{% endfor %}
 		</div>
 	</div>

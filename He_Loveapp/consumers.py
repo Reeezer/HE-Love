@@ -92,3 +92,7 @@ def database_chat_insertion(insertion):
                             match=get_match)
     
     value_to_insert.save()
+    
+    ## We also need to update the last message date in the Match
+    get_match.last_message_date = get_date
+    get_match.save()
