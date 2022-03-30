@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='chat',
             name='match',
-            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, related_name='chat_match', to='He_Loveapp.match'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='chat_match', to='He_Loveapp.match'),
         ),
     ]
