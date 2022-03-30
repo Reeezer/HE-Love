@@ -149,7 +149,7 @@ class Match(models.Model):
 class Chat(models.Model):
     user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
     user_receiver = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_receiver')
-    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match',default=NULL)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match',default=None)
     message = models.TextField()
     date = models.DateTimeField(default=datetime.datetime.now)
     
