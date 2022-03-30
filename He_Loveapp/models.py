@@ -1,5 +1,3 @@
-from asyncio.windows_events import NULL
-from tkinter import NONE
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
@@ -151,7 +149,7 @@ class Match(models.Model):
 class Chat(models.Model):
     user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
     user_receiver = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_receiver')
-    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match',default=None)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match')
     message = models.TextField()
     date = models.DateTimeField(default=datetime.datetime.now)
     
