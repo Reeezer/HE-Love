@@ -1,7 +1,6 @@
 [
 	{
 		"model": "He_Loveapp.appuser",
-		"pk": "1",
 		"fields": {
 			"username": "Leon",
 			"password": "leonleon",
@@ -12,7 +11,6 @@
 	},
 	{
 		"model": "He_Loveapp.appuser",
-		"pk": "2",
 		"fields": {
 			"username": "Luca",
 			"password": "lucaluca",
@@ -23,7 +21,6 @@
 	},
 	{
 		"model": "He_Loveapp.appuser",
-		"pk": "3",
 		"fields": {
 			"username": "lucaaaaa",
 			"password": "lucaluca",
