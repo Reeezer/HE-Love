@@ -134,7 +134,7 @@ class Match(models.Model):
         if self.vote_user_1 == True and self.vote_user_2 == True:
             self.user_1.rank_up(5)
             self.user_2.rank_up(5)
-            Chat.objects.create(user_sender=user, user_receiver=self.get_opposite_user(user), match=self, message="Entered in a new chat")
+            Chat.objects.create(user_sender=user, user_receiver=self.get_opposite_user(user), match=self)
             
     def get_last_message(self):
         return Chat.objects.filter(match=self.id).order_by('-date').first()

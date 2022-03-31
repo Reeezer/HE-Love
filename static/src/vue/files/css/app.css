@@ -209,6 +209,45 @@ header .icon {
 	color: var(--white-color);
 }
 
+@keyframes move-left {
+	from { transform : translateX(0em) }
+	to   { transform : translateX(-50em) }
+}
+
+@keyframes move-right {
+	from { transform : translateX(0em) }
+	to   { transform : translateX(50em) }
+}
+
+@keyframes move-up {
+	from { transform : translateY(0em) }
+	to   { transform : translateY(-50em) }
+}
+
+.moving-left {
+	animation-name: move-left;
+  	animation-duration: 1s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+  	animation-fill-mode: forwards;
+}
+
+.moving-right {
+	animation-name: move-right;
+	animation-duration: 1s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+}
+
+.moving-up {
+	animation-name: move-up;
+	animation-duration: 1s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+}
+
 /* ----- Profile ----- */
 
 .profile {

@@ -18,9 +18,9 @@
 			<div class="description">{{ appuser.description }}</div>
 		</div>
 		<div class="buttons">
-			<a class="button" href="{% url 'users-dislike' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
-			<a class="button minus-button" href="{% url 'users-superlike' appuser.id %}">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
-			<a class="button" href="{% url 'users-like' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
+			<a class="button" onclick="swipeLeft(this)" href="javascript:delay('{% url 'users-dislike' appuser.id %}')">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
+			<a class="button minus-button" onclick="swipeUp(this)" href="javascript:delay('{% url 'users-superlike' appuser.id %}')">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
+			<a class="button" onclick="swipeRight(this)" href="javascript:delay('{% url 'users-like' appuser.id %}')">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
 		</div>
 	</div>
 {% empty %}
@@ -28,6 +28,30 @@
 		Aucun utilisateur pour le moment ...
 	</div>
 {% endfor %}
+
+<script>
+	function swipeLeft(element)
+	{
+		let card = element.parentElement.parentElement;
+		card.classList.add('moving-left');
+	}
+
+	function swipeRight(element)
+	{
+		let card = element.parentElement.parentElement;
+		card.classList.add('moving-right');
+	}
+
+	function swipeUp(element)
+	{
+		let card = element.parentElement.parentElement;
+		card.classList.add('moving-up');
+	}
+	
+	function delay(URL) {
+		setTimeout(function() { window.location = URL }, 500 );
+	}	
+</script>
 
 {% endblock %}
 
