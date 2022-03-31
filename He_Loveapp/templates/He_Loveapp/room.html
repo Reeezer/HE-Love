@@ -1,36 +1,109 @@
 {% extends 'He_Loveapp/base.html' %}
 
-{% block title %}Room{% endblock %}
+{% block title %}
+    Match 
+    {% if user.id == users_1.id %}
+        {{ users_2.username }}
+    {% else %}
+        {{ users_1.username }}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-    <text>Welcome in {{users_1}} and {{users_2}} chat</text><br>
-    <text>Match : {{match.pk}}</text><br>
-<textarea id="chat-log" cols="100" rows="20">
-{% for chat in chats %}
-{{chat.user_sender}} : {{chat.message}} ({{chat.date|date:'Y-m-d'}} {{chat.date|time:'H:i:s'}} [UTC/GTM+0])
-{% endfor %}
-</textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
+<div class="chat">
+    {% if user.id == users_1.id %}
+        <a class="user" href="{% url 'users-detail' users_2.id %}">{{ users_2.username }}</a>
+    {% else %}
+        <a class="user" href="{% url 'users-detail' users_1.id %}">{{ users_1.username }}</a>
+    {% endif %}
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.sender + ' : ' + data.message +' ('+(data.date_time) +') [UTC/GTM+0]\n\n');
-        };
+    <div id="messages">
+        {% for chat in chats %}
+            {% if user.id == chat.user_sender.id %}
+                <div class="mine-msg messagebox">
+                    <div class="message-content mine-content">
+            {% else %}
+                <div class="other-msg messagebox">
+                    <div class="message-content other-content">
+            {% endif %}
+                        <div class="datetime">{{chat.date|date:'d/m'}} {{chat.date|time:'H:i'}}</div>
+                        <div class="message">{{chat.message}}</div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
+    <div class="input">
+        <input id="chat-message-input" type="text" placeholder="Entrez votre message"><br>
+        <input id="chat-message-submit" type="button" value="Envoyer">
+        {{ room_name|json_script:"room-name" }}
+    </div>
+</div>
+
+<script>
+    window.addEventListener("load", function(event) {
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+
+   const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+      var wsStart = 'ws://';
+          if (window.location.protocol == 'https:') {
+              wsStart = 'wss://'
+          }
+
+      const chatSocket = new WebSocket(
+          wsStart
+          + window.location.host
+          + '/ws/chat/'
+          + roomName
+          + '/'
+      );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+
+        if (!data.message){
+            return;
+        }
+
+        let me = '{{user.username}}'
+        let sender = data.sender;
+
+        let chat = document.querySelector('#messages');
+
+        let divMessageBox = document.createElement("div");
+        divMessageBox.classList.add('messagebox');
+        if (me == sender){
+            divMessageBox.classList.add('mine-msg');
+        }
+        else{
+            divMessageBox.classList.add('other-msg');
+        }
+
+        let divContent = document.createElement("div");
+        divContent.classList.add('message-content');
+
+        let divDatetime = document.createElement("div");
+        divDatetime.classList.add('datetime');
+        divDatetime.innerHTML = data.date_time;
+
+        let divMessage = document.createElement("div");
+        divMessage.classList.add('message');
+        divMessage.innerHTML = data.message;
+
+        divContent.append(divDatetime);
+        divContent.append(divMessage);
+        divMessageBox.append(divContent);
+
+        chat.append(divMessageBox);
+
+        window.scrollTo(0, document.body.scrollHeight);
+    };
+
+    chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly\n'+e);
         };
 
         document.querySelector('#chat-message-input').focus();
@@ -82,6 +155,6 @@
             console.log(value_to_return)
             return value_to_return
         } 
+</script>
 
-    </script>
 {% endblock %}

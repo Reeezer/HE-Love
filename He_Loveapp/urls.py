@@ -20,6 +20,6 @@ urlpatterns = [
     path('events/<pk>/delete/', views.EventDeleteView.as_view(), name='events-delete'),
     path('events/<pk>/join/', views.joinEvent, name='events-join'),
     path('events/<pk>/leave/', views.leaveEvent, name='events-leave'),
-    path('chat/', views.chat_choose, name='chat'),
+    path('chat/', views.MatchListView.as_view(), name='chat'),
     path('chat/<str:room_name>/', views.room, name='room'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

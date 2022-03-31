@@ -6,12 +6,9 @@
 
 <body style="visibility:hidden">
   <header>
-    {% load static %} <img class="icon" src="{% static "src/vue/files/img/fire.png" %}" alt="swipe"/>
-    <h1>
-      <a class="title" style="color: inherit;" href="{% url 'home' %}">
-        he-love
-      </a>
-    </h1>
+    <a href="{% url 'users-list' %}">
+      {% load static %} <img class="main-logo" src="{% static "src/vue/files/img/he_love.png" %}" alt="swipe" href="{% url 'home' %}"/>
+    </a>
   </header>
 
   <div class="content">
@@ -41,12 +38,12 @@
           </a>
         {% endif %}
 
-        {% if view_name == 'chats-list' %}
-          <a class="button selected-view" href="">
+        {% if view_name == 'chat' %}
+          <a class="button selected-view" href="{% url 'chat' %}">
             {% load static %} <img class="icon" src="{% static "src/vue/files/img/chat-white.png" %}" alt="chat"/>
           </a>
         {% else %}
-          <a class="button" href="">
+          <a class="button" href="{% url 'chat' %}">
             {% load static %} <img class="icon" src="{% static "src/vue/files/img/chat.png" %}" alt="chat"/>
           </a>
         {% endif %}

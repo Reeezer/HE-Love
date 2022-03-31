@@ -1,0 +1,30 @@
+{% extends 'He_Loveapp/base.html' %}
+
+{% block title %}Vos matches{% endblock %}
+
+{% block content %}
+
+<div class="matches">
+    {% for match in object_list %}
+        <a class="match" href="{% url 'room' match.get_match_url %}">
+            {% if user.id == match.user_1.id %}
+                <img class="profile-picture" src="{{ match.user_2.profile_picture.url }}" alt="{{ user_2.username }}" >
+            {% else %}
+                <img class="profile-picture" src="{{ match.user_1.profile_picture.url }}" alt="{{ user_1.username }}" > 
+            {% endif %}
+            
+            <div class="profile-infos">
+                <div class="username">
+                    {% if user.id == match.user_1.id %}
+                        {{ match.user_2.username }}
+                    {% else %}
+                        {{ match.user_1.username }}
+                    {% endif %}
+                </div>
+                <div class="last-message">{{ match.get_last_message.message }}</div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+
+{% endblock %}

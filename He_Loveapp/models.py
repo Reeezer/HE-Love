@@ -28,12 +28,11 @@ def user_Image_Files_directory_path(instance,filename):
 
 
 class AppUser(User):
-    
     birth_date = models.DateField(blank=False, default=datetime.datetime.now)
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
     description = models.TextField(blank=False, default="Hello !", max_length=300)
     rank = models.IntegerField(default=0)
-    profilePicture = models.ImageField(upload_to=user_Image_Files_directory_path)
+    profile_picture = models.ImageField(upload_to=user_Image_Files_directory_path)
     
     def __str__(self):
         return self.username
@@ -56,7 +55,7 @@ class AppUser(User):
         self.save()
         
     def get_pictures(self): # Includes PP
-        return self.profilePicture + Picture.objects.filter(user=self)
+        return Picture.objects.filter(user=self.id).first()
     
 
 
@@ -143,6 +142,12 @@ class Match(models.Model):
             self.user_1.rank_up(5)
             self.user_2.rank_up(5)
             Chat.objects.create(user_sender=user, user_receiver=self.get_opposite_user(user), message="Entered in a new chat")
+            
+    def get_last_message(self):
+        return Chat.objects.filter(match=self.id).order_by('-date').first()
+    
+    def get_match_url(self):
+        return f"{self.user_1}m4t5hW1t3h{self.user_2}"
         
     @classmethod
     def create(self, user_1, user_2, vote_user_1):
@@ -152,11 +157,16 @@ class Match(models.Model):
         self.date = datetime.datetime.now()
         self.last_message_date = datetime.datetime.now()
         
+    def updaterecord_last_message_date(id, message_date):
+        update_match = Match.objects.get(id=id)
+        update_match.last_message_date = message_date
+        update_match.save()
+        
         
 class Chat(models.Model):
     user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
     user_receiver = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_receiver')
-    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match',default=0)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match')
     message = models.TextField()
     date = models.DateTimeField(default=datetime.datetime.now)
     
