@@ -12,28 +12,38 @@
 			<th>Titre</th>
 			<th>Date</th>
 			<th>Description</th>
+			<th>Rejoindre/quitter</th>
 		</tr>
 	</thead>
 
 	{% for event in object_list %}
+		<tr class="clickable-row" >
+			<td>
+				<img class="icon" src="../media/{{ event.image }}">
+			</td>
+			<td>
+				{{ event.id }}
+			</td>
+			<td>
+				{{ event.title }}
+			</td>
+			<td>
+				{{ event.date }}
+			</td>
+			<td>
+				{{ event.description }}
+			</td>
+			<td>
+				{% if user.id in event.getParticipantsId %}
+					<a href="{% url 'events-leave' event.id %}">Quitter</a>
+				{% else %}
+					<a href="{% url 'events-join' event.id %}">Rejoindre</a>
+				{% endif %}
+				<a href="{% url 'events-detail' event.id %}">Detail</a>
 
-	<tr>
-		<td>
-			<img class="icon" src="../media/{{ event.image }}">
-		</td>
-		<td>
-			{{ event.id }}
-		</td>
-		<td>
-			{{ event.title }}
-		</td>
-		<td>
-			{{ event.date }}
-		</td>
-		<td>
-			{{ event.description }}
-		</td>
-	</tr>
+			</td>
+		</tr>
+	
 
 	{% endfor %}
 </table>

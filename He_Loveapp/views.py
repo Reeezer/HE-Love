@@ -27,25 +27,7 @@ from django.core import serializers
 def index(request):
     return redirect('users-list')
 
-from .forms import ImageForm
-def tempTestView(request):
-    context = {}
-    if request.method == 'POST':
-        form = ImageForm(request.POST,request.FILES)
-        if form.is_valid():
-            name = form.cleaned_data.get("name")
-            img = form.cleaned_data.get("image")
-            obj = Picture.objects.create(
-                user = AppUser.objects.get(username=name),
-                path = img
-            )
-            obj.save()
-    else:
-        form = ImageForm()
-            
-    
-    context['form'] = ImageForm()
-    return render(request,"He_Loveapp/picture_list.html",context)
+
 
 def sign_up(request):
     context = {}
@@ -210,6 +192,20 @@ class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
         return user
 
 
+
+@login_required
+def joinEvent(request,pk):
+    event = Event.objects.get(id=pk)
+    event.participants.add(request.user.id)
+    event.save()
+    return redirect('events-list')
+
+@login_required
+def leaveEvent(request,pk):
+    event = Event.objects.get(id=pk)
+    event.participants.remove(request.user)
+    event.save()
+    return redirect('events-list')
 
 class EventListView(LoginRequiredMixin, generic.ListView):
     model = Event
