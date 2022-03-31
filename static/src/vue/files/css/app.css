@@ -498,3 +498,16 @@ textarea {
 	padding: 4px 8px;
 	width: 96px;
 }
+
+.clickable-row:hover {
+	background-color: #ccc;
+}
+
+.clickable-row.pointer {
+	cursor: pointer;
+}
+
+#eventImg{
+	max-width: 33%;
+	height: auto;
+}

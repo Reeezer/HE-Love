@@ -73,7 +73,8 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField()
     description = models.TextField()
-    image = models.ImageField(upload_to=event_upload)
+    image = models.ImageField(default='eventimages/default-Event.png',upload_to=event_upload)
+    participants = models.ManyToManyField(AppUser)
     
     class Meta:
         verbose_name_plural="Events"
@@ -87,6 +88,12 @@ class Event(models.Model):
     def get_date(self):
         return self.date
     
+    def getParticipantsId(self):
+        return [u.id for u in self.participants.all()]
+    
+    def getParticipants(self):
+        return self.participants.all()
+
     
 class Match(models.Model):
     user_1 = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='match_user_1')

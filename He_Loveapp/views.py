@@ -1,4 +1,4 @@
-from urllib import request
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic, View
@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django import forms
-import datetime
+from datetime import datetime
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -27,25 +27,7 @@ from django.core import serializers
 def index(request):
     return redirect('users-list')
 
-from .forms import ImageForm
-def tempTestView(request):
-    context = {}
-    if request.method == 'POST':
-        form = ImageForm(request.POST,request.FILES)
-        if form.is_valid():
-            name = form.cleaned_data.get("name")
-            img = form.cleaned_data.get("image")
-            obj = Picture.objects.create(
-                user = AppUser.objects.get(username=name),
-                path = img
-            )
-            obj.save()
-    else:
-        form = ImageForm()
-            
-    
-    context['form'] = ImageForm()
-    return render(request,"He_Loveapp/picture_list.html",context)
+
 
 def sign_up(request):
     context = {}
@@ -211,6 +193,20 @@ class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
 
 
 
+@login_required
+def joinEvent(request,pk):
+    event = Event.objects.get(id=pk)
+    event.participants.add(request.user.id)
+    event.save()
+    return redirect('events-list')
+
+@login_required
+def leaveEvent(request,pk):
+    event = Event.objects.get(id=pk)
+    event.participants.remove(request.user)
+    event.save()
+    return redirect('events-list')
+
 class EventListView(LoginRequiredMixin, generic.ListView):
     model = Event
 
@@ -224,7 +220,7 @@ class EventDetailView(LoginRequiredMixin, generic.DetailView):
 
 class EventCreateView(LoginRequiredMixin, generic.CreateView):
     model = Event
-    fields = ['title', 'date',  'description','image']
+    fields = ['title', 'date',  'description']
     success_url = reverse_lazy('events-list')
 
 
