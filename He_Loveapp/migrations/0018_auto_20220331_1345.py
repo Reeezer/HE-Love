@@ -14,6 +14,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AddField(
+            model_name='event',
+            name='image',
+            field=models.ImageField(default='', upload_to=He_Loveapp.models.event_upload),
+            preserve_default=False,
+        ),
         migrations.AlterField(
             model_name='appuser',
             name='profilePicture',
