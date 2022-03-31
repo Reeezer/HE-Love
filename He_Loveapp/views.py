@@ -1,4 +1,4 @@
-from urllib import request
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic, View
@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django import forms
-import datetime
+from datetime import datetime
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -224,7 +224,7 @@ class EventDetailView(LoginRequiredMixin, generic.DetailView):
 
 class EventCreateView(LoginRequiredMixin, generic.CreateView):
     model = Event
-    fields = ['title', 'date',  'description','image']
+    fields = ['title', 'date',  'description']
     success_url = reverse_lazy('events-list')
 
 

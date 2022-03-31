@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
@@ -73,9 +72,9 @@ def event_upload(instance,filename):
         
 class Event(models.Model):
     title = models.CharField(max_length=200)
-    date = models.DateTimeField()
+    date = models.DateField()
     description = models.TextField()
-    image = models.ImageField(upload_to=event_upload)
+    image = models.ImageField(default='eventimages/default-Event.png',upload_to=event_upload)
     
     class Meta:
         verbose_name_plural="Events"
@@ -150,7 +149,7 @@ class Match(models.Model):
 class Chat(models.Model):
     user_sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_sender')
     user_receiver = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='chat_user_receiver')
-    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match',default=NULL)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='chat_match',default=0)
     message = models.TextField()
     date = models.DateTimeField(default=datetime.datetime.now)
     
