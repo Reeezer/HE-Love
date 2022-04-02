@@ -54,7 +54,7 @@ class AppUser(User):
         self.rank += amount
         self.save()
         
-    def get_pictures(self): # Includes PP
+    def get_pictures(self):
         return Picture.objects.filter(user=self.id)
     
 

@@ -5,22 +5,31 @@
 {% block content %}
 
 {% for appuser in object_list %}
-	<div class="card">
-		<div class="informations">
-			<div class="username"><strong class="username">{{ appuser.username }}</strong> {{ appuser.get_age }}</div>
-			<div class="interests">
-				{% for appuser_interest in appuser.get_interests %}
-					<div class="interest">{{ appuser_interest.interest.description }}</div>
-				{% empty %}
-					<div class="interest">Aucune</div>
-				{% endfor %}
-			</div>
-			<div class="description">{{ appuser.description }}</div>
+	<div class="swipe-user">
+		<div class="pictures-card">
+			{% for picture in appuser.get_pictures %}
+				<img class="picture-card" src="{{ picture.path.url }}" alt="picture"/>
+			{% empty %}
+				<div class="bg"></div>
+			{% endfor %}
 		</div>
-		<div class="buttons">
-			<a class="button" onclick="swipeLeft(this)" href="javascript:delay('{% url 'users-dislike' appuser.id %}')">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
-			<a class="button minus-button" onclick="swipeUp(this)" href="javascript:delay('{% url 'users-superlike' appuser.id %}')">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
-			<a class="button" onclick="swipeRight(this)" href="javascript:delay('{% url 'users-like' appuser.id %}')">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
+		<div class="card">
+			<div class="informations">
+				<div class="username"><strong class="username">{{ appuser.username }}</strong> {{ appuser.get_age }}</div>
+				<div class="interests">
+					{% for appuser_interest in appuser.get_interests %}
+						<div class="interest">{{ appuser_interest.interest.description }}</div>
+					{% empty %}
+						<div class="interest">Aucune</div>
+					{% endfor %}
+				</div>
+				<div class="description">{{ appuser.description }}</div>
+			</div>
+			<div class="buttons">
+				<a class="button" onclick="swipeLeft(this)" href="javascript:delay('{% url 'users-dislike' appuser.id %}')">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
+				<a class="button minus-button" onclick="swipeUp(this)" href="javascript:delay('{% url 'users-superlike' appuser.id %}')">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
+				<a class="button" onclick="swipeRight(this)" href="javascript:delay('{% url 'users-like' appuser.id %}')">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
+			</div>
 		</div>
 	</div>
 {% empty %}
@@ -51,6 +60,39 @@
 	function delay(URL) {
 		setTimeout(function() { window.location = URL }, 500 );
 	}	
+
+	let cards = document.getElementsByClassName("swipe-user");
+	let frontCard = cards[cards.length - 1];
+	
+	frontCard.addEventListener("click", function(e) {
+		const center = this.offsetWidth / 2 + 8;
+		const div = this.getElementsByClassName("pictures-card")[0];
+		const pictures = this.getElementsByClassName("picture-card");
+		if (e.offsetX > center) { 
+			// right
+			changePicture(div, pictures, 1);
+		} 
+		else { 
+			// left
+			changePicture(div, pictures, -1);
+		}
+	}, false);
+
+	function changePicture(div, pictures, pad){
+		const frag = document.createDocumentFragment();
+		const sortedPictures = [pictures.length];
+		for (let i = 0; i < pictures.length; i++){
+			let index = (i + pad) % pictures.length;
+			if (index < 0){
+				index = pictures.length-1;
+			}
+			sortedPictures[index] = pictures[i];
+		}
+		for (const item of sortedPictures) {
+			frag.appendChild(item);
+		}
+		div.appendChild(frag);
+	}
 </script>
 
 {% endblock %}

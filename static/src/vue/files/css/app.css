@@ -186,7 +186,7 @@ header .icon {
 
 	padding: 16px;
 
-	background-color: var(--blue-color);
+	background: linear-gradient(#ffffff00, #000000BF);
 }
 
 .card .informations {
@@ -216,6 +216,24 @@ header .icon {
 
 .card .interest {
 	color: var(--white-color);
+}
+
+.swipe-user .bg {
+	position: absolute;
+	background-color: var(--gray-color);
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
+}
+
+.swipe-user .picture-card {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+	background-color: var(--light-gray-transparent-color);
+	object-fit: cover;
+	border-radius: 8px;
 }
 
 @keyframes move-left {
