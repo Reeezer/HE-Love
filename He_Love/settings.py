@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-6@6^u=oeh!p^o8j@li7fsx566b7o_+zd6xisj*1uspgw#jxw7k
 # FIXME : Set to False on last deploy
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['helove.srvz-webapp.he-arc.ch/']
 
 
 # Application definition
