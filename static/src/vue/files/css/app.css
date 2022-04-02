@@ -105,6 +105,15 @@ body {
 	color: var(--primary-color);
 }
 
+.profile-picture {
+	border-radius: 100px;
+
+	background-color: var(--light-gray-transparent-color);
+
+	width: 64px;
+	height: 64px;
+}
+
 /* ----- Title bar ----- */
 
 header {
@@ -256,6 +265,8 @@ header .icon {
 	border-radius: 8px;
 	gap: 16px;
 
+	margin-bottom: 92px;
+
 	flex: 0 1 auto;
 
 	padding: 8px;
@@ -311,6 +322,22 @@ header .icon {
 
 .profile .button {
 	border-radius: 4px;
+}
+
+.profile .pictures{
+	display: flex;
+	flex-flow: row wrap;
+	gap: 8px;
+}
+
+.profile .picture {
+	background-color: var(--light-gray-transparent-color);
+
+	object-fit: cover;
+
+	width: 128px;
+	height: 196px;
+	border-radius: 8px;
 }
 
 /* ----- Forms ------ */
@@ -403,15 +430,6 @@ textarea {
 	border-radius: 8px;
 
 	background-color: var(--white-color);
-}
- 
-.matches .profile-picture {
-	border-radius: 100px;
-
-	background-color: var(--light-gray-transparent-color);
-
-	width: 64px;
-	height: 64px;
 }
 
 .matches .profile-infos {

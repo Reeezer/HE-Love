@@ -17,6 +17,22 @@
 	</div>
 
 	<div class="section">
+		<div class="title">Photo de profil</div>
+		<img class="profile-picture" src="{{ appuser.profile_picture.url }}" alt="profile picture"/>	
+	</div>
+
+	<div class="section">
+		<div class="title">Photos</div>
+		<div class="pictures">
+			{% for picture in appuser.get_pictures %}
+				<img class="picture" src="{{ picture.path.url }}" alt="picture"/>
+			{% empty %}
+				<div>Aucune photo</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="section">
 		<div class="title">Description</div>
 		<div class="info">{{ appuser.description }}</div>	
 	</div>

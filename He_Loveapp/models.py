@@ -55,7 +55,7 @@ class AppUser(User):
         self.save()
         
     def get_pictures(self): # Includes PP
-        return Picture.objects.filter(user=self.id).first()
+        return Picture.objects.filter(user=self.id)
     
 
 
