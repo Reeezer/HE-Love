@@ -4,7 +4,7 @@
 
 media_root/*
 !media_root/eventimages/default-Event.png
-!media_root/userimages/default-Image.png
+!media_root/userimages/defaultUserPP.png
 
 log.txt
 
