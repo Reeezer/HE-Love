@@ -1,3 +1,4 @@
+from typing_extensions import Required
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
@@ -32,7 +33,9 @@ class AppUser(User):
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
     description = models.TextField(blank=False, default="Hello !", max_length=300)
     rank = models.IntegerField(default=0)
+
     profile_picture = models.ImageField(upload_to=user_Image_Files_directory_path,default='userimages/defaultUserPP.png')
+
     
     def __str__(self):
         return self.username
@@ -54,8 +57,8 @@ class AppUser(User):
         self.rank += amount
         self.save()
         
-    def get_pictures(self): # Includes PP
-        return Picture.objects.filter(user=self.id).first()
+    def get_pictures(self):
+        return Picture.objects.filter(user=self.id)
     
 
 
@@ -141,7 +144,7 @@ class Match(models.Model):
         if self.vote_user_1 == True and self.vote_user_2 == True:
             self.user_1.rank_up(5)
             self.user_2.rank_up(5)
-            Chat.objects.create(user_sender=user, user_receiver=self.get_opposite_user(user), message="Entered in a new chat")
+            Chat.objects.create(user_sender=user, user_receiver=self.get_opposite_user(user), match=self)
             
     def get_last_message(self):
         return Chat.objects.filter(match=self.id).order_by('-date').first()

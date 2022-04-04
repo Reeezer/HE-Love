@@ -16,8 +16,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 
 from .models import *
-
-from django.core import serializers
+from .forms import *
 
 
 # Create your wiews here
@@ -28,10 +27,9 @@ def index(request):
     return redirect('users-list')
 
 
-
 def sign_up(request):
     context = {}
-    form = RegisterForm(request.POST or None)
+    form = RegisterForm(request.POST,request.FILES)
     if request.method == 'POST':
         if form.is_valid():
             user = form.save()
@@ -39,6 +37,7 @@ def sign_up(request):
             return redirect('home')
     context['form'] = form
     return render(request, 'registration/sign_up.html', context)
+
 
 @login_required
 def update_user(request, pk):
@@ -59,6 +58,7 @@ def update_user(request, pk):
         obj.save()
         return redirect('users-detail', request.user.id)
     return render(request, 'registration/sign_up.html', context)
+
 
 def swipe(request_id, pk, is_like):
     user_2 = AppUser.objects.get(id=pk)
@@ -88,15 +88,18 @@ def swipe(request_id, pk, is_like):
     else:
         Match.objects.create(user_1=user_1, user_2=user_2, vote_user_1=is_like)
 
+
 @login_required
 def like(request, pk):
     swipe(request.user.id, pk, True)
     return redirect('users-list')
+
     
 @login_required
 def dislike(request, pk):
     swipe(request.user.id, pk, False)
     return redirect('users-list')
+
 
 @login_required
 def superlike(request, pk):
@@ -104,6 +107,7 @@ def superlike(request, pk):
     swipe(request.user.id, pk, True)
     swipe(pk, request.user.id, True)
     return redirect('users-list')
+
 
 class UserListView(LoginRequiredMixin, generic.ListView):
     model = AppUser
@@ -125,73 +129,12 @@ class UserListView(LoginRequiredMixin, generic.ListView):
         disliked_users = Dislike.objects.filter(Q(user=current_user))
         disliked_3days = [disliked_user.user_disliked.id for disliked_user in disliked_users if not disliked_user.is_valid_now()]
         
-        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('rank')[:3]
+        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('rank')[:1]
 
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
     model = AppUser
-
-
-class RegisterForm(UserCreationForm):
-    user_gender_interests = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Genres recherchés', widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
-    user_interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), label="Intérêts", widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
-
-    class Meta:
-        model = AppUser
-        fields = ['username', 'password1', 'password2', 'birth_date', 'gender', 'description']
-
-    def save(self, commit=True):
-        user = super(RegisterForm, self).save(commit=False)
-        if commit:
-            user.save()
-        gender_interests = self.cleaned_data['user_gender_interests']
-        user_interests = self.cleaned_data['user_interests']
-        
-        for gender_interest in gender_interests:
-            User_gender_interest.objects.create(user=user, gender=gender_interest)
-        i = 0
-        for interest in user_interests:
-            if i < 5: 
-                User_interest.objects.create(user=user, interest=interest)
-                i += 1
-        
-        if commit:
-            user.save()
-        return user
-
-
-class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
-    user_gender_interests = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Genres recherchés', widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
-    user_interests = forms.ModelMultipleChoiceField(queryset=Interest.objects.all(), label="Intérêts", widget=forms.CheckboxSelectMultiple(attrs={'class': 'forms-box'}))
-
-    class Meta:
-        model = AppUser
-        fields = ['birth_date', 'gender', 'description']
-
-    def save(self, commit=True):
-        # it's not the right way to do this, but we're already too far in the project to change the database and add ManyToMany field in models
-        user = super(UpdateUserForm, self).save(commit=False)
-        if commit:
-            user.save()
-        gender_interests = self.cleaned_data['user_gender_interests']
-        user_interests = self.cleaned_data['user_interests']
-        
-        User_gender_interest.objects.filter(user=user).delete()
-        User_interest.objects.filter(user=user).delete()
-        
-        for gender_interest in gender_interests:
-            User_gender_interest.objects.create(user=user, gender=gender_interest)
-        i = 0
-        for interest in user_interests:
-            if i < 5: 
-                User_interest.objects.create(user=user, interest=interest)
-                i += 1
-        
-        if commit:
-            user.save()
-        return user
-
-
+    
 
 @login_required
 def joinEvent(request,pk):

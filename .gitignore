@@ -3,6 +3,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python,visualstudiocode
 
 media_root/*
+!media_root/eventimages/default-Event.png
+!media_root/userimages/default-Image.png
+
 log.txt
 
 ### Django ###
