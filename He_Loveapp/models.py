@@ -1,3 +1,4 @@
+from typing_extensions import Required
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
@@ -32,7 +33,7 @@ class AppUser(User):
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
     description = models.TextField(blank=False, default="Hello !", max_length=300)
     rank = models.IntegerField(default=0)
-    profile_picture = models.ImageField(upload_to=user_Image_Files_directory_path)
+    profile_picture = models.ImageField(upload_to=user_Image_Files_directory_path, blank=True)
     
     def __str__(self):
         return self.username

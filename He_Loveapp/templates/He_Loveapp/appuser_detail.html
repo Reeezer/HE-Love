@@ -18,7 +18,11 @@
 
 	<div class="section">
 		<div class="title">Photo de profil</div>
-		<img class="profile-picture" src="{{ appuser.profile_picture.url }}" alt="profile picture"/>	
+		{% if appuser.profile_picture %}
+			<img class="profile-picture" src="{{ appuser.profile_picture.url }}" alt="profile picture"/>	
+		{% else %}
+			<div>Aucune photo</div>
+		{% endif %}
 	</div>
 
 	<div class="section">
