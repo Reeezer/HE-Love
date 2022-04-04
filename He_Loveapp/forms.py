@@ -87,3 +87,7 @@ class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
         if commit:
             user.save()
         return user
+    
+
+class JoinEventForm(forms.Form):
+    event_id = forms.IntegerField()

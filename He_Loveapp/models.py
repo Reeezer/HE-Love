@@ -33,7 +33,9 @@ class AppUser(User):
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
     description = models.TextField(blank=False, default="Hello !", max_length=300)
     rank = models.IntegerField(default=0)
-    profile_picture = models.ImageField(upload_to=user_Image_Files_directory_path, blank=True)
+
+    profile_picture = models.ImageField(upload_to=user_Image_Files_directory_path,default='userimages/defaultUserPP.png')
+
     
     def __str__(self):
         return self.username
@@ -74,7 +76,8 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField()
     description = models.TextField()
-    image = models.ImageField(upload_to=event_upload)
+    image = models.ImageField(default='eventimages/default-Event.png',upload_to=event_upload)
+    participants = models.ManyToManyField(AppUser)
     
     class Meta:
         verbose_name_plural="Events"
@@ -88,6 +91,12 @@ class Event(models.Model):
     def get_date(self):
         return self.date
     
+    def getParticipantsId(self):
+        return [u.id for u in self.participants.all()]
+    
+    def getParticipants(self):
+        return self.participants.all()
+
     
 class Match(models.Model):
     user_1 = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='match_user_1')
