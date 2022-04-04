@@ -49,7 +49,7 @@ def tempTestView(request):
 
 def sign_up(request):
     context = {}
-    form = RegisterForm(request.POST or None)
+    form = RegisterForm(request.POST,request.FILES)
     if request.method == 'POST':
         if form.is_valid():
             user = form.save()
