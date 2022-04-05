@@ -295,6 +295,11 @@ header .icon {
 	background-color: var(--white-color);
 }
 
+.swipe-user .line-selected {
+	background-color: var(--primary-color);
+}
+
+
 /* ----- Profile ----- */
 
 .profile {
