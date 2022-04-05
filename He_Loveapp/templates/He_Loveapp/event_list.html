@@ -4,48 +4,22 @@
 
 {% block content %}
 
-<table>
-	<thead>
-		<tr>
-			<th>#</th>
-			<th></th>
-			<th>Titre</th>
-			<th>Date</th>
-			<th>Description</th>
-			<th>Rejoindre/quitter</th>
-		</tr>
-	</thead>
-
-	{% for event in object_list %}
-		<tr class="clickable-row" >
-			<td>
-				<img class="icon" src="../media/{{ event.image }}">
-			</td>
-			<td>
-				{{ event.id }}
-			</td>
-			<td>
-				{{ event.title }}
-			</td>
-			<td>
-				{{ event.date }}
-			</td>
-			<td>
-				{{ event.description }}
-			</td>
-			<td>
-				{% if user.id in event.getParticipantsId %}
-					<a href="{% url 'events-leave' event.id %}">Quitter</a>
-				{% else %}
-					<a href="{% url 'events-join' event.id %}">Rejoindre</a>
-				{% endif %}
-				<a href="{% url 'events-detail' event.id %}">Detail</a>
-
-			</td>
-		</tr>
-	
-
-	{% endfor %}
-</table>
+<div class="events">
+    {% for event in object_list %}
+        <div class="event">
+			<a class="title" href="{% url 'events-detail' event.id %}">{{ event.title }}</a>
+			<div class="date">{{ event.date }}</div>
+			<img class="image" src="../media/{{ event.image }}" alt="event image"/>
+			
+			{% if user.id in event.getParticipantsId %}
+				<a class="event-button" href="{% url 'events-leave' event.id %}">Quitter</a>
+			{% else %}
+				<a class="event-button" href="{% url 'events-join' event.id %}">Rejoindre</a>
+			{% endif %}
+        </div>
+    {% empty %}
+        Aucun évènement pour le moment ...
+    {% endfor %}
+</div>
 
 {% endblock %}

@@ -154,7 +154,7 @@ class EventListView(LoginRequiredMixin, generic.ListView):
     model = Event
 
     def get_queryset(self):
-        return Event.objects.all()
+        return Event.objects.all().order_by('date')
 
 
 class EventDetailView(LoginRequiredMixin, generic.DetailView):
