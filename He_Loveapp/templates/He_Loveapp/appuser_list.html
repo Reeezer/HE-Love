@@ -6,6 +6,11 @@
 
 {% for appuser in object_list %}
 	<div class="swipe-user">
+		<div class="pictures-line-group">
+			{% for i in appuser.nb_pictures %}
+				<div class="line"></div>
+			{% endfor %}
+		</div>
 		<div class="pictures-card">
 			{% for picture in appuser.get_pictures %}
 				<img class="picture-card" src="{{ picture.path.url }}" alt="picture"/>
@@ -26,9 +31,9 @@
 				<div class="description">{{ appuser.description }}</div>
 			</div>
 			<div class="buttons">
-				<a class="button" onclick="swipeLeft(this)" href="javascript:delay('{% url 'users-dislike' appuser.id %}')">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
-				<a class="button minus-button" onclick="swipeUp(this)" href="javascript:delay('{% url 'users-superlike' appuser.id %}')">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
-				<a class="button" onclick="swipeRight(this)" href="javascript:delay('{% url 'users-like' appuser.id %}')">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
+				<a class="button" href="{% url 'users-dislike' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/dislike.png" %}" alt="dislike"/></a>
+				<a class="button minus-button" href="{% url 'users-superlike' appuser.id %}">{% load static %} <img class="icon minus-icon" src="{% static "src/vue/files/img/superlike.png" %}" alt="superlike"/></a>
+				<a class="button" href="{% url 'users-like' appuser.id %}">{% load static %} <img class="icon" src="{% static "src/vue/files/img/like.png" %}" alt="like"/></a>
 			</div>
 		</div>
 	</div>
@@ -39,30 +44,15 @@
 {% endfor %}
 
 <script>
-	function swipeLeft(element)
-	{
-		let card = element.parentElement.parentElement;
-		card.classList.add('moving-left');
-	}
-
-	function swipeRight(element)
-	{
-		let card = element.parentElement.parentElement;
-		card.classList.add('moving-right');
-	}
-
-	function swipeUp(element)
-	{
-		let card = element.parentElement.parentElement;
-		card.classList.add('moving-up');
-	}
-	
-	function delay(URL) {
-		setTimeout(function() { window.location = URL }, 500 );
-	}	
-
 	let cards = document.getElementsByClassName("swipe-user");
 	let frontCard = cards[cards.length - 1];
+
+	let lineGroups = document.getElementsByClassName("pictures-line-group");
+	let frontLineGroup = lineGroups[lineGroups.length - 1];
+
+	let currentLine = 0;
+	let line = frontLineGroup.getElementsByClassName("line")[currentLine];
+	line.classList.add("line-selected");
 	
 	frontCard.addEventListener("click", function(e) {
 		const center = this.offsetWidth / 2 + 8;
@@ -79,6 +69,7 @@
 	}, false);
 
 	function changePicture(div, pictures, pad){
+		// Change front picture
 		const frag = document.createDocumentFragment();
 		const sortedPictures = [pictures.length];
 		for (let i = 0; i < pictures.length; i++){
@@ -92,6 +83,22 @@
 			frag.appendChild(item);
 		}
 		div.appendChild(frag);
+
+		// Modify selected line
+		let lines = frontLineGroup.getElementsByClassName("line");
+		currentLine = (currentLine + pad) % lines.length;
+		if (currentLine < 0){
+			currentLine = lines.length-1;
+		}
+		
+		for (let i = 0; i < lines.length; i++){
+			if (i == currentLine){
+				lines[i].classList.add("line-selected");
+			}
+			else{
+				lines[i].classList.remove("line-selected");
+			}
+		}
 	}
 </script>
 

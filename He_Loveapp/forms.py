@@ -24,17 +24,11 @@ class RegisterForm(UserCreationForm):
         user = super(RegisterForm, self).save(commit=False)
         if commit:
             user.save()
-            
-        f = open("log.txt", "w")
-        print('register form', file=f)
-        print(self.cleaned_data, file=f)
         
         gender_interests = self.cleaned_data['user_gender_interests']
         user_interests = self.cleaned_data['user_interests']
         pictures = []
         for i in range(1, 5):
-            print(i, file=f)
-            print(self.cleaned_data[f"user_picture_{i}"], file=f)
             picture = self.cleaned_data[f"user_picture_{i}"]
             if picture:
                 pictures.append(picture)

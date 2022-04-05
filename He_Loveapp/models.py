@@ -33,10 +33,8 @@ class AppUser(User):
     gender = models.ForeignKey('Gender', on_delete=models.CASCADE, related_name='user_gender', blank=False, default=6)
     description = models.TextField(blank=False, default="Hello !", max_length=300)
     rank = models.IntegerField(default=0)
-
     profile_picture = models.ImageField(upload_to=user_Image_Files_directory_path,default='userimages/defaultUserPP.png')
 
-    
     def __str__(self):
         return self.username
     
@@ -59,6 +57,9 @@ class AppUser(User):
         
     def get_pictures(self):
         return Picture.objects.filter(user=self.id)
+    
+    def nb_pictures(self):
+        return range(len(list(Picture.objects.filter(user=self.id))))
     
 
 
@@ -108,18 +109,6 @@ class Match(models.Model):
     
     class Meta:
         verbose_name_plural="Matches"
-        
-    def check_match(self):
-        # Both matches
-        if self.vote_user_1 == True and self.vote_user_2 == True:
-            return True, "It's a match !"
-        
-        # No match :(
-        elif self.vote_user_1 == False or self.vote_user_2 == False:
-           return False, "Match refused :("
-       
-        else:
-            return False, "Waiting for match"
     
     def get_opposite_user(self, user):
         if user == self.user_1:

@@ -1,20 +1,21 @@
 {% extends 'He_Loveapp/base.html' %}
 
-{% block title %}Events{% endblock %}
+{% block title %}{{ event.title }}{% endblock %}
 
 {% block content %}
 
-<div>
-	<div><img id="eventImg" src="../../media/{{ event.image }}"></div>
-	<div>Titre: {{ event.title }}</div>
-	<div>Date: {{ event.date }}</div>
-	<div>Description: {{ event.description }}</div>
-	<div>
+<div class="event-details">
+	{% load static %}<a class="back-button" href="{% url 'events-list' %}"><img class="icon" src="{% static "src/vue/files/img/backIcon.png" %}"/></a>
+
+	<img class="image" src="../../media/{{ event.image }}"/>
+	<div class="title">{{ event.title }}</div>
+	<div class="date">{{ event.date }}</div>
+	<div class="description">{{ event.description }}</div>
+	<div class="participants">
 		{% for user in event.getParticipants %}
-			<div><a href="{% url 'users-detail' user.id %}">{{ user.username }}</a></div>
+			<a href="{% url 'users-detail' user.id %}">{{ user.username }}</a>
 		{% endfor %}
 	</div>
-	<div>{% load static %}<a href="{% url 'events-list' %}"><img class="icon" src="{% static "src/vue/files/img/backIcon.png" %}"/></div>
 </div>
 
 {% endblock %}
