@@ -24,6 +24,8 @@
                 <div class="last-message">{{ match.get_last_message.message }}</div>
             </div>
         </a>
+    {% empty %}
+        Aucun match pour le moment ...
     {% endfor %}
 </div>
 

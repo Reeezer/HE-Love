@@ -109,6 +109,7 @@ body {
 	border-radius: 100px;
 
 	background-color: var(--light-gray-transparent-color);
+	object-fit: cover;
 
 	width: 64px;
 	height: 64px;
