@@ -33,14 +33,14 @@ ALLOWED_HOSTS = ['helove.srvz-webapp.he-arc.ch/','localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'He_Loveapp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'He_Loveapp',
-    'channels'
+    'django.contrib.staticfiles'
 ]
 
 MIDDLEWARE = [
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'He_Love.wsgi.application'
+#WSGI_APPLICATION = 'He_Love.wsgi.application'
 ASGI_APPLICATION = 'He_Love.asgi.application'
 
 CHANNEL_LAYERS = {
