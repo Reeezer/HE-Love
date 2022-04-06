@@ -154,7 +154,7 @@ class EventListView(LoginRequiredMixin, generic.ListView):
     model = Event
 
     def get_queryset(self):
-        return Event.objects.all().order_by('date')
+        return Event.objects.filter(date__gte=date.today()).order_by('date')
 
 
 class EventDetailView(LoginRequiredMixin, generic.DetailView):
@@ -165,6 +165,16 @@ class EventCreateView(LoginRequiredMixin, generic.CreateView):
     model = Event
     fields = ['title', 'date',  'description','image']
     success_url = reverse_lazy('events-list')
+
+def eventCreate(request):
+    context = {}
+    form = EventCreationForm(request.POST, request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            event = form.save()
+            return redirect('events-detail', pk=event.pk)
+    context['form'] = form
+    return render(request, 'He_Loveapp/event_form.html', context)
 
 
 class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
