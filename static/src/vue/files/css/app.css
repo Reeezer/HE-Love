@@ -133,6 +133,8 @@ header {
 	font-family: 'Nunito', sans-serif;
 
 	background-color: var(--white-color);
+
+	box-shadow: var(--black-transparent-color) 0px 0px 5px;
 }
 
 header .title {
@@ -158,6 +160,8 @@ header .icon {
 	justify-content: space-between;
 	padding: 16px 32px;
 	background-color: var(--white-color);
+
+	box-shadow: var(--black-transparent-color) 0px 0px 5px;
 }
 
 .navbar .button, .profile .button {
@@ -625,10 +629,10 @@ textarea {
 }
 
 .events .event {
-	flex-flow: column nowrap;
+	flex-flow: row nowrap;
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	justify-content: space-between;
 
 	padding: 8px;
 	border-radius: 8px;
@@ -636,14 +640,17 @@ textarea {
 	background-color: var(--white-color);
 }
 
-.events .image{
-	width: 80%;
-	max-width: 600px;
-	max-height: 300px;
-	height: auto;
-	object-fit: cover;
-	border-radius: 4px;
-	box-shadow: var(--black-transparent-color) 0px 0px 2px;
+.events .infos {
+	flex-flow: row nowrap;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.events .events-info {
+	flex-flow: column nowrap;
+	display: flex;
+	justify-content: space-between;
 }
 
 .events .date, .event-details .date {
@@ -654,13 +661,10 @@ textarea {
 .events .title {
 	font-size: 18px;
 	color: var(--primary-color);
-	padding: 4px 8px;
-	border: 2px solid var(--primary-color);
-	border-radius: 8px;
 }
 
 .events .event-button {
-	border-radius: 8px;
+	border-radius: 4px;
 	background-color: var(--primary-color);
 	color: var(--white-color);
 	cursor: pointer;
@@ -673,7 +677,7 @@ textarea {
 	flex-flow: column nowrap;
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 16px;
 	flex: 0 1 auto;
 
 	padding: 16px;
@@ -681,6 +685,13 @@ textarea {
 
 	margin-bottom: 92px;
 	background-color: var(--white-color);
+}
+
+.event-details .details {
+	flex-flow: column nowrap;
+	display: flex;
+	gap: 0px;
+	align-items: center;
 }
 
 .event-details .image {
@@ -717,9 +728,13 @@ textarea {
 	border: 2px solid var(--primary-color);
 }
 
-.event-details .partcipants {
+.event-details .participants {
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
 	gap: 4px;
+}
+
+.event-details .participant {
+	color: var(--black-transparent-color);
 }

@@ -97,6 +97,9 @@ class Event(models.Model):
     
     def getParticipants(self):
         return self.participants.all()
+    
+    def get_nb_partipants(self):
+        return self.participants.count()
 
     
 class Match(models.Model):

@@ -7,10 +7,15 @@
 <div class="events">
     {% for event in object_list %}
         <div class="event">
-			<a class="title" href="{% url 'events-detail' event.id %}">{{ event.title }}</a>
-			<div class="date">{{ event.date }}</div>
-			<img class="image" src="../media/{{ event.image }}" alt="event image"/>
-			
+			<div class="infos">
+				<img class="profile-picture" src="../media/{{ event.image }}" alt="event image"/>
+				<div class="event-infos">
+					<a class="title" href="{% url 'events-detail' event.id %}">{{ event.title }}</a>
+					<div class="date">{{ event.date }}</div>
+				</div>
+				<div class="nb-participants">{{ event.get_nb_partipants }} participant(s)</div>
+			</div>
+
 			{% if user.id in event.getParticipantsId %}
 				<a class="event-button" href="{% url 'events-leave' event.id %}">Quitter</a>
 			{% else %}
