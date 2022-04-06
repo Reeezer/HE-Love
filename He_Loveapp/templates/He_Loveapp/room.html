@@ -27,7 +27,7 @@
                 <div class="other-msg messagebox">
                     <div class="message-content other-content">
             {% endif %}
-                        <div class="datetime">{{chat.date|date:'d/m'}} {{chat.date|time:'H:i'}}</div>
+                        <div class="datetime">{{chat.date|date:'d/m'}} {{chat.date|time:'H:i:s'}}</div>
                         <div class="message">{{chat.message}}</div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
 
         let divDatetime = document.createElement("div");
         divDatetime.classList.add('datetime');
-        divDatetime.innerHTML = data.date_time;
+        divDatetime.innerHTML = data.date_time; //////////////////////
 
         let divMessage = document.createElement("div");
         divMessage.classList.add('message');
