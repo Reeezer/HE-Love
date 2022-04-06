@@ -21,7 +21,7 @@
 		{% if appuser.profile_picture %}
 			<img class="profile-picture" src="{{ appuser.profile_picture.url }}" alt="profile picture"/>	
 		{% else %}
-			<div>Aucune photo</div>
+			<div class="placeholder">Aucune photo</div>
 		{% endif %}
 	</div>
 
@@ -31,7 +31,7 @@
 			{% for picture in appuser.get_pictures %}
 				<img class="picture" src="{{ picture.path.url }}" alt="picture"/>
 			{% empty %}
-				<div>Aucune photo</div>
+				<div class="placeholder">Aucune photo</div>
 			{% endfor %}
 		</div>
 	</div>

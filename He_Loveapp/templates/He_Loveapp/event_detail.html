@@ -8,12 +8,16 @@
 	{% load static %}<a class="back-button" href="{% url 'events-list' %}"><img class="icon" src="{% static "src/vue/files/img/backIcon.png" %}"/></a>
 
 	<img class="image" src="../../media/{{ event.image }}"/>
-	<div class="title">{{ event.title }}</div>
-	<div class="date">{{ event.date }}</div>
-	<div class="description">{{ event.description }}</div>
+	<div class="details">
+		<div class="title">{{ event.title }}</div>
+		<div class="date">{{ event.date }}</div>
+		<div class="description">{{ event.description }}</div>
+	</div>
+	
 	<div class="participants">
+		<div>Liste des participants :</div>
 		{% for user in event.getParticipants %}
-			<a href="{% url 'users-detail' user.id %}">{{ user.username }}</a>
+			<a class="participant" href="{% url 'users-detail' user.id %}">{{ user.username }}</a>
 		{% endfor %}
 	</div>
 </div>
