@@ -77,8 +77,9 @@ class EventCreationForm(LoginRequiredMixin,forms.ModelForm):
             raise forms.ValidationError('La date de l\'évènement doit être dans le futur')
         return doe
     
-    def save(self,commit=True):
+    def save(self,owner,commit=True):
         event = super(EventCreationForm, self).save(commit=False)
+        event.owner = owner
         if commit:
             event.save()
             
