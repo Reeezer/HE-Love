@@ -1,4 +1,5 @@
 from django import forms
+from datetime import date
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -20,6 +21,13 @@ class RegisterForm(UserCreationForm):
         model = AppUser
         fields = ['username', 'password1', 'password2', 'birth_date', 'gender', 'description', 'profile_picture']
 
+    def clean_birth_date(self):
+        dob = self.cleaned_data['birth_date']
+        age = (date.today() - dob).days / 365
+        if age < 18:
+            raise forms.ValidationError('You must be at least 18 years old')
+        return dob
+    
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         if commit:
