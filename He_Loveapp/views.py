@@ -154,7 +154,8 @@ class EventListView(LoginRequiredMixin, generic.ListView):
     model = Event
 
     def get_queryset(self):
-        return Event.objects.all().order_by('date')
+        yesterday = datetime.datetime.today() - datetime.timedelta(days=1)
+        return Event.objects.filter(date__gt=yesterday).order_by('date')
 
 
 class EventDetailView(LoginRequiredMixin, generic.DetailView):
