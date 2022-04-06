@@ -645,6 +645,19 @@ textarea {
 	background-color: var(--white-color);
 }
 
+.events .button-group{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.events .create-button {
+	border: 2px solid var(--primary-color);	
+	padding: 4px 8px;
+	border-radius: 4px;
+	color: var(--primary-color);
+}
+
 .events .infos {
 	flex-flow: row nowrap;
 	display: flex;
