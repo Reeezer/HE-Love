@@ -82,7 +82,9 @@ class EventCreationForm(LoginRequiredMixin,forms.ModelForm):
         event.owner = owner
         if commit:
             event.save()
-            
+        event.participants.add(owner.id)
+        if commit:
+            event.save()
         return event
 
 class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
