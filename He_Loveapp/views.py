@@ -169,7 +169,7 @@ class EventCreateView(LoginRequiredMixin, generic.CreateView):
 @login_required
 def eventCreate(request):
     context = {}
-    form = EventCreationForm(request.POST, request.FILES)
+    form = EventCreationForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
             event = form.save(request.user)
