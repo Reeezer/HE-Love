@@ -30,7 +30,7 @@
                         {% ifnotequal len(html.unescape(chat.message)) 0 %}
                             <div class="datetime">{{chat.date|date:'d/m'}} {{chat.date|time:'H:i:s'}}</div>
                             <div class="message">{{chat.message}}</div>
-                        {% endif %}
+                        {% endifnotequal %}
                     </div>
                 </div>
         {% endfor %}
