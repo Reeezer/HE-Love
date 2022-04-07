@@ -79,6 +79,7 @@ class Event(models.Model):
     description = models.TextField()
     image = models.ImageField(default='eventimages/default-Event.png',upload_to=event_upload)
     participants = models.ManyToManyField(AppUser)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='event_owner')
     
     class Meta:
         verbose_name_plural="Events"
