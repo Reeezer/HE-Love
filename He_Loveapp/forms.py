@@ -91,7 +91,7 @@ class UpdateUserForm(LoginRequiredMixin, forms.ModelForm):
 
     class Meta:
         model = AppUser
-        fields = ['birth_date', 'gender', 'description']
+        fields = ['birth_date', 'gender', 'description', 'profile_picture']
 
     def save(self, commit=True):
         # it's not the right way to do this, but we're already too far in the project to change the database and add ManyToMany field in models
