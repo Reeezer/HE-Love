@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Gender, Interest, AppUser, User_gender_interest, User_interest, Picture,Event
 
+import re
+
 class ImageForm(forms.Form):
     image = forms.ImageField()
     name = forms.CharField()
@@ -28,6 +30,13 @@ class RegisterForm(UserCreationForm):
         if age < 18:
             raise forms.ValidationError('You must be at least 18 years old')
         return dob
+    
+    def clean_username(self):
+        dou = self.cleaned_data['username']
+        reg = re.compile('^[a-z0-9\._-]+$')
+        if not reg.match(dou):
+            raise forms.ValidationError('Seulement les charactères alphanumériques sont autorisés, ainsi que les caractères spéciaux: -, _, .')
+        return dou
     
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
