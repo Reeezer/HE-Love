@@ -159,12 +159,7 @@ class EventListView(LoginRequiredMixin, generic.ListView):
 
 class EventDetailView(LoginRequiredMixin, generic.DetailView):
     model = Event
-
-
-class EventCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Event
-    fields = ['title', 'date',  'description','image']
-    success_url = reverse_lazy('events-list')
+    
 
 @login_required
 def eventCreate(request):
@@ -195,17 +190,6 @@ def event_update(request, pk):
                 return redirect('events-detail', pk=pk)
         return render(request, 'He_Loveapp/event_form.html', {'form': form})
     return redirect('events-list')
-
-
-class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Event
-    fields = ['title', 'date', 'description','image']
-    success_url = reverse_lazy('events-list')
-
-
-class EventDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Event
-    success_url = reverse_lazy('events-list')
 
 
 class MatchListView(LoginRequiredMixin, generic.ListView):
