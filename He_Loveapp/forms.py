@@ -33,7 +33,7 @@ class RegisterForm(UserCreationForm):
     
     def clean_username(self):
         dou = self.cleaned_data['username']
-        reg = re.compile('^[a-z0-9\._-]+$')
+        reg = re.compile('^[a-zA-Z0-9\._-]+$')
         if not reg.match(dou):
             raise forms.ValidationError('Seulement les charactères alphanumériques sont autorisés, ainsi que les caractères spéciaux: -, _, .')
         return dou
