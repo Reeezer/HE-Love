@@ -188,7 +188,7 @@ def event_delete(request, pk):
 def event_update(request, pk):
     item = Event.objects.get(pk=pk)
     if request.user == item.owner:
-        form = EventCreationForm(request.POST, instance=item)
+        form = EventCreationForm(request.POST or None,request.FILES or None, instance=item)
         if request.method == 'POST':
             if form.is_valid():
                 form.save(request.user)
