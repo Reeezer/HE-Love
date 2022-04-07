@@ -681,6 +681,13 @@ textarea {
 	color: var(--primary-color);
 }
 
+.events .event-buttons {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	gap: 4px;
+}
+
 .events .event-button {
 	border-radius: 4px;
 	background-color: var(--primary-color);

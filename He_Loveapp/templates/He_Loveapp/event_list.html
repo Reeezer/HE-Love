@@ -4,6 +4,8 @@
 
 {% block content %}
 
+{% load static %}
+
 <div class="events">
 	<div class="button-group">
 		<a class="create-button" href="{% url 'events-create' %}">Nouvel évènement</a>
@@ -19,15 +21,22 @@
 				</div>
 				<div class="nb-participants">
 					<div>{{ event.get_nb_partipants }}</div>
-					{% load static %} <img class="icon-participants" src="{% static "src/vue/files/img/profile-black.png" %}"/>
+					<img class="icon-participants" src="{% static "src/vue/files/img/profile-black.png" %}"/>
 				</div>
 			</div>
 
-			{% if user.id in event.getParticipantsId %}
-				<a class="event-button" href="{% url 'events-leave' event.id %}">Quitter</a>
-			{% else %}
-				<a class="event-button" href="{% url 'events-join' event.id %}">Rejoindre</a>
-			{% endif %}
+			<div class="event-buttons">
+				{% if user.id == event.owner.id %}
+					<a href="{% url 'events-update' event.id %}"><img class="icon-participants" src="{% static "src/vue/files/img/edit.png" %}"/></a>
+					<a href="{% url 'events-delete' event.id %}"><img class="icon-participants" src="{% static "src/vue/files/img/dislike.png" %}"/></a>
+				{% endif %}
+
+				{% if user.id in event.getParticipantsId %}
+					<a class="event-button" href="{% url 'events-leave' event.id %}">Quitter</a>
+				{% else %}
+					<a class="event-button" href="{% url 'events-join' event.id %}">Rejoindre</a>
+				{% endif %}
+			</div>
         </div>
     {% empty %}
         Aucun évènement pour le moment ...
