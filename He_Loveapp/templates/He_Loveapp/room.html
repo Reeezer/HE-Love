@@ -27,10 +27,10 @@
                 <div class="other-msg messagebox">
                     <div class="message-content other-content">
             {% endif %}
-                        {% ifnotequal len(html.unescape(chat.message)) 0 %}
+                        {% if chat.message != '' %}
                             <div class="datetime">{{chat.date|date:'d/m'}} {{chat.date|time:'H:i:s'}}</div>
                             <div class="message">{{chat.message}}</div>
-                        {% endifnotequal %}
+                        {% endif %}
                     </div>
                 </div>
         {% endfor %}
