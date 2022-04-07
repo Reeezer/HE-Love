@@ -18,6 +18,8 @@
 		<div>Liste des participants :</div>
 		{% for user in event.getParticipants %}
 			<a class="participant" href="{% url 'users-detail' user.id %}">{{ user.username }}</a>
+		{% empty %}
+			<div class="participant">Aucun participant encore</div>
 		{% endfor %}
 	</div>
 </div>

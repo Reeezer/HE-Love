@@ -29,7 +29,7 @@ def index(request):
 
 def sign_up(request):
     context = {}
-    form = RegisterForm(request.POST, request.FILES)
+    form = RegisterForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
             user = form.save()
@@ -51,7 +51,7 @@ def update_user(request, pk):
     user_gender_interests = User_gender_interest.objects.filter(user=user).values('gender')
     gender_interests = Gender.objects.filter(id__in=user_gender_interests).values('name')
     
-    form = UpdateUserForm(request.POST or None, request.FILES, instance=user)
+    form = UpdateUserForm(request.POST or None, request.FILES or None, instance=user)
     context = {'form': form, 'appuser':user, 'interests':list(interests), 'gender_interests':list(gender_interests)}
     if form.is_valid():
         obj = form.save()
@@ -169,7 +169,7 @@ class EventCreateView(LoginRequiredMixin, generic.CreateView):
 @login_required
 def eventCreate(request):
     context = {}
-    form = EventCreationForm(request.POST, request.FILES)
+    form = EventCreationForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
             event = form.save(request.user)
