@@ -129,7 +129,7 @@ class UserListView(LoginRequiredMixin, generic.ListView):
         disliked_users = Dislike.objects.filter(Q(user=current_user))
         disliked_3days = [disliked_user.user_disliked.id for disliked_user in disliked_users if not disliked_user.is_valid_now()]
         
-        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('rank')[:1]
+        return AppUser.objects.filter(gender__in=genders).exclude(id=current_user.id).exclude(Q(id__in=matches_1) | Q(id__in=matches_2) | Q(id__in=matches_3) | Q(id__in=matches_4) | Q(id__in=disliked_3days)).order_by('-rank')[:1]
 
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
