@@ -1,15 +1,18 @@
 {% load static %}
 <html>
 <head>
-  <title>{% block title %}{% endblock %}</title>
+  <title>HE-Love 💕</title>
+  <link rel = "icon" href = 
+      "{% static "src/vue/files/img/favicon.png" %}"
+              type = "image/x-icon"> 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 </head>
 
 <body style="visibility:hidden">
   <header>
-    <a href="{% url 'users-list' %}">
-      {% load static %} <img class="main-logo" src="{% static "src/vue/files/img/he_love.png" %}" alt="swipe" href="{% url 'home' %}"/>
-    </a>
+      <a href="{% url 'users-list' %}">
+        {% load static %} <img class="main-logo" src="{% static "src/vue/files/img/he_love.png" %}" alt="swipe" href="{% url 'home' %}"/>
+      </a>
   </header>
 
   <div class="content">
