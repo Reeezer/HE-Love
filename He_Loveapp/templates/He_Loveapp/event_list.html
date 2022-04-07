@@ -17,7 +17,10 @@
 					<a class="title" href="{% url 'events-detail' event.id %}">{{ event.title }}</a>
 					<div class="date">{{ event.date }}</div>
 				</div>
-				<div class="nb-participants">{{ event.get_nb_partipants }} participant(s)</div>
+				<div class="nb-participants">
+					<div>{{ event.get_nb_partipants }}</div>
+					{% load static %} <img class="icon-participants" src="{% static "src/vue/files/img/profile-black.png" %}"/>
+				</div>
 			</div>
 
 			{% if user.id in event.getParticipantsId %}

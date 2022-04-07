@@ -624,7 +624,7 @@ textarea {
 /* ----- Events ----- */
 
 .events {
-	flex-flow: column nowrap;
+	flex-flow: column wrap;
 	display: flex;
 	gap: 8px;
 
@@ -634,7 +634,7 @@ textarea {
 }
 
 .events .event {
-	flex-flow: row nowrap;
+	flex-flow: row wrap;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -687,6 +687,16 @@ textarea {
 	color: var(--white-color);
 	cursor: pointer;
 	padding: 4px 8px;
+}
+
+.events .nb-participants {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+}
+
+.events .icon-participants {
+	height: 24px;
 }
 
 /* ----- Event detail ----- */
