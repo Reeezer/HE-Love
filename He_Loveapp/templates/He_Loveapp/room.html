@@ -27,8 +27,10 @@
                 <div class="other-msg messagebox">
                     <div class="message-content other-content">
             {% endif %}
-                        <div class="datetime">{{chat.date|date:'d/m'}} {{chat.date|time:'H:i:s'}}</div>
-                        <div class="message">{{chat.message}}</div>
+                        {% if len(chat.message.strip()) != 0 %}
+                            <div class="datetime">{{chat.date|date:'d/m'}} {{chat.date|time:'H:i:s'}}</div>
+                            <div class="message">{{chat.message}}</div>
+                        {% endif %}
                     </div>
                 </div>
         {% endfor %}
