@@ -634,10 +634,11 @@ textarea {
 }
 
 .events .event {
-	flex-flow: row wrap;
+	flex-flow: row nowrap;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	gap: 8px;
 
 	padding: 8px;
 	border-radius: 8px;
@@ -678,6 +679,7 @@ textarea {
 
 .events .title {
 	font-size: 18px;
+	word-break: break-word;
 	color: var(--primary-color);
 }
 
@@ -698,7 +700,7 @@ textarea {
 
 .events .nb-participants {
 	display: flex;
-	flex-flow: row wrap;
+	flex-flow: row nowrap;
 	align-items: center;
 }
 
@@ -744,6 +746,7 @@ textarea {
 }
 
 .event-details .description {
+	text-align: center;
 	max-width: 80%;
 }
 
